@@ -35,6 +35,7 @@
     "@types/react": "^16.9.22",
     "@types/react-dom": "^16.9.5",
     "coveralls": "^3.0.9",
+    "eslint-plugin-import": "^2.20.1",
     "husky": "^4.2.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -47,6 +48,7 @@
   },
   "dependencies": {
     "@types/matter-js": "^0.10.9",
+    "emotion": "^10.0.27",
     "matter-js": "^0.14.2",
     "react-default-memo": "^1.0.2",
     "tuplerone": "^3.4.0-beta.6"
