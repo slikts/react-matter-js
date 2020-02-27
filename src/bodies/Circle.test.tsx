@@ -7,7 +7,15 @@ jest.mock('../Engine', () => ({
   useEngine: () => ({}),
 }));
 
-jest.mock('matter-js');
+jest.mock('matter-js', () => ({
+  World: {
+    add() {},
+    remove() {},
+  },
+  Bodies: {
+    circle: () => ({}),
+  },
+}));
 
 describe('Circle', () => {
   it('renders', () => {

@@ -4,10 +4,10 @@ import * as ReactDOM from 'react-dom';
 import {
   Engine,
   RenderClones,
-  Render,
   Walls,
   Rectangle,
   Circle,
+  Constraint,
 } from '../src/.';
 
 const App = () => {
@@ -24,8 +24,10 @@ const App = () => {
           }}
         >
           <Walls x={0} y={0} width={width} height={height} wallWidth={25} />
-          <Circle x={100} y={100} radius={50} />
-          <Rectangle x={300} y={100} width={100} height={100} />
+          <Constraint>
+            <Circle x={100} y={100} radius={50} />
+            <Rectangle x={300} y={100} width={100} height={100} />
+          </Constraint>
         </RenderClones>
       </Engine>
     </div>

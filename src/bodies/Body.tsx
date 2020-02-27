@@ -8,13 +8,17 @@ import { valueMemo } from '../util';
 type Props = {
   children: () => Matter.Body;
   cats?: CatKey[];
-  // bodyRef?: React.MutableRefObject<Matter.Body>;
+  bodyRef?: React.MutableRefObject<Matter.Body | null>;
 };
 
-const Body = ({ children: createBody, cats = [] }: Props) => {
+const Body = ({ children: createBody, cats = [], bodyRef }: Props) => {
   const engine = useEngine();
   useEffect(() => {
     const body = createBody();
+
+    if (bodyRef) {
+      bodyRef.current = body;
+    }
 
     body[catsKey] = cats;
 
@@ -26,6 +30,9 @@ const Body = ({ children: createBody, cats = [] }: Props) => {
 
     return () => {
       Matter.World.remove(engine.world, body);
+      if (bodyRef) {
+        bodyRef.current = null;
+      }
     };
   }, [engine, createBody]);
 

@@ -2,12 +2,8 @@ import { useEffect, cloneElement, useRef } from 'react';
 import Matter from 'matter-js';
 import { useEngine } from './Engine';
 
-type Props = {
-  children: [React.ReactElement, React.ReactElement];
-  length?: number;
-};
-
-const Constraint = ({ children, length, ...options }: Props) => {
+// TODO: return type?
+const Constraint = ({ children, length, ...options }: Props): any => {
   const engine = useEngine();
 
   const bodyARef = useRef();
@@ -35,6 +31,11 @@ const Constraint = ({ children, length, ...options }: Props) => {
       key,
     }),
   );
+};
+
+type Props = {
+  children: [React.ReactElement, React.ReactElement];
+  length?: number;
 };
 
 export default Constraint;
