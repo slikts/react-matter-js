@@ -1,8 +1,6 @@
 {
-  "name": "rmjs",
+  "name": "react-matter-js",
   "version": "0.1.0",
-  "license": "MIT",
-  "author": "slikts",
   "main": "dist/index.js",
   "module": "dist/rmjs.esm.js",
   "typings": "dist/index.d.ts",
@@ -11,8 +9,9 @@
   ],
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build",
+    "build": "tsdx build && node scripts/copyPackage.js",
     "test": "tsdx test --env=jsdom --passWithNoTests",
+    "test:prod": "yarn test --coverage",
     "lint": "tsdx lint"
   },
   "peerDependencies": {
@@ -27,7 +26,7 @@
     "printWidth": 80,
     "semi": true,
     "singleQuote": true,
-    "trailingComma": "es5"
+    "trailingComma": "all"
   },
   "devDependencies": {
     "@testing-library/react": "^9.4.1",
@@ -35,11 +34,13 @@
     "@types/node-sass": "^4.11.0",
     "@types/react": "^16.9.22",
     "@types/react-dom": "^16.9.5",
+    "coveralls": "^3.0.9",
     "husky": "^4.2.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "rollup-plugin-postcss": "^2.1.1",
     "rollup-plugin-scss": "^2.1.0",
+    "semantic-release": "^17.0.4",
     "tsdx": "^0.12.3",
     "tslib": "^1.11.0",
     "typescript": "^3.8.2"
@@ -49,5 +50,33 @@
     "matter-js": "^0.14.2",
     "react-default-memo": "^1.0.2",
     "tuplerone": "^3.4.0-beta.6"
-  }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slikts/react-matter-js.git"
+  },
+  "keywords": [
+    "physics-engine",
+    "react",
+    "matter-js"
+  ],
+  "author": "slikts <dabas@untu.ms>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/slikts/react-matter-js/issues"
+  },
+  "homepage": "https://github.com/slikts/react-matter-js#readme",
+  "description": "React adapter for the Matter.js physics engine"
 }
