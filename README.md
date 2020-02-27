@@ -25,3 +25,9 @@ npm i react-matter-js
 MIT
 
 [demo]: https://codesandbox.io/s/react-matter-js-demo-pisno
+[matter-js]: https://github.com/liabru/matter-js
+[react-dom-box2d]: https://github.com/oneto018/react-dom-box2d
+[box2d.ts]: https://github.com/flyover/box2d.ts
+[box2d.js]: https://github.com/kripken/box2d.js/
+[p2.js]: https://github.com/schteppe/p2.js/
+[react-phaser-fiber]: https://github.com/mattjennings/react-phaser-fiber
