@@ -6,7 +6,7 @@ const { Provider } = EngineContext;
 export const useEngine = () => useContext(EngineContext);
 
 type Props = {
-  options: object;
+  options: Matter.IEngineDefinition;
   children: React.ReactNode;
 };
 

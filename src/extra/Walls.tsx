@@ -11,10 +11,10 @@ type Props = {
   width: number;
   height: number;
   wallWidth?: number;
-  options: React.ComponentProps<typeof Rectangle>['options'];
+  options?: React.ComponentProps<typeof Rectangle>['options'];
 };
 
-const Walls = ({ x, y, width, height, wallWidth = 100, options }: Props) => {
+const Walls = ({ x, y, width, height, wallWidth = 25, options }: Props) => {
   const props = {
     options: {
       ...options,
