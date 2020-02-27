@@ -1,6 +1,7 @@
 import { useEffect, cloneElement, useRef } from 'react';
 import Matter from 'matter-js';
 import { useEngine } from './Engine';
+import { valueMemo } from './util';
 
 // TODO: return type?
 const Constraint = ({ children, length, ...options }: Props): any => {
@@ -38,4 +39,4 @@ type Props = {
   length?: number;
 };
 
-export default Constraint;
+export default valueMemo(Constraint);
