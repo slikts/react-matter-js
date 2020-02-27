@@ -17,6 +17,7 @@ const App = () => {
         >
           <Walls x={0} y={0} width={width} height={height} wallWidth={25} />
           <Circle x={100} y={100} radius={50} />
+          <Rectangle x={300} y={100} width={100} height={100} />
         </Render>
       </Engine>
     </div>
