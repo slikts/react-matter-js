@@ -5,6 +5,7 @@ import React, { useRef, useEffect } from 'react';
 import Matter from 'matter-js';
 
 import { useEngine } from './Engine';
+import { valueMemo } from './util';
 import styles from './Render.module.scss';
 
 type Props = {
@@ -17,7 +18,7 @@ type Props = {
 const Render = ({
   options = {},
   enableMouse = false,
-  mouseConstraintOptions = {},
+  mouseConstraintOptions,
   children,
   ...props
 }: Props) => {
@@ -60,4 +61,4 @@ const Render = ({
   );
 };
 
-export default Render;
+export default valueMemo(Render);

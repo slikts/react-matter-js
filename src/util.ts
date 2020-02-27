@@ -23,11 +23,7 @@ const keyFilter = ([key]: [string, any]) => !key.startsWith('_');
 export const valueCompare = <P>(
   prev: Readonly<PropsWithChildren<P>>,
   next: Readonly<PropsWithChildren<P>>,
-): boolean => {
-  console.log(prev, next);
-
-  return ValueObject(prev, keyFilter) === ValueObject(next, keyFilter);
-};
+): boolean => ValueObject(prev, keyFilter) === ValueObject(next, keyFilter);
 export const valueMemo = <A>(
   component: ComponentType<A>,
 ): MemoExoticComponent<ComponentType<A>> => memo(component, valueCompare);

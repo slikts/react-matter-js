@@ -5,6 +5,15 @@ import Engine from './Engine';
 
 describe('Engine', () => {
   it('renders', () => {
-    render(<Engine options={{}}>foo</Engine>);
+    const { rerender } = render(<Engine options={{}}>foo</Engine>);
+    rerender(
+      <Engine
+        options={{
+          positionIterations: 5,
+        }}
+      >
+        foo
+      </Engine>,
+    );
   });
 });

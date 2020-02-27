@@ -5,6 +5,6 @@
 
 describe('Render', () => {
   it('renders', () => {
-    // render(<Render />);
+    // render(<Render>foo</Render>);
   });
 });

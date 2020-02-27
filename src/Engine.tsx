@@ -1,6 +1,8 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import Matter from 'matter-js';
 
+import { valueMemo } from './util';
+
 export const EngineContext = createContext<Matter.Engine>(null as any);
 const { Provider } = EngineContext;
 export const useEngine = () => useContext(EngineContext);
@@ -27,4 +29,4 @@ const Engine = ({ options, children }: Props) => {
   return engine ? <Provider value={engine}>{children}</Provider> : null;
 };
 
-export default Engine;
+export default valueMemo(Engine);
