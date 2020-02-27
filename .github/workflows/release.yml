@@ -16,7 +16,7 @@ jobs:
           node-version: 12
       - run: npm i -g yarn
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Test
         run: yarn test:prod
       - name: Coveralls
