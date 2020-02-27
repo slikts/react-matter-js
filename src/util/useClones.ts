@@ -17,9 +17,13 @@ const useClones = () => {
         }
 
         const { x, y } = body.position!;
-        const { domEl } = body[cloneKey]!;
+        const { ref } = body[cloneKey]!;
 
-        domEl.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
+        // TODO: ?
+        if (!ref.current) {
+          return;
+        }
+        ref.current!.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
       });
     });
   }, []);
@@ -40,11 +44,11 @@ type Clone = {
 } & (
   | {
       key: typeof domKey;
-      domEl: HTMLElement;
+      ref: React.RefObject<HTMLElement>;
     }
   | {
       key: typeof svgKey;
-      domEl: SVGElement;
+      ref: React.RefObject<SVGElement>;
     }
 );
 

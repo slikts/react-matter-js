@@ -48,6 +48,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.28",
     "@types/matter-js": "^0.10.9",
     "emotion": "^10.0.27",
     "matter-js": "^0.14.2",

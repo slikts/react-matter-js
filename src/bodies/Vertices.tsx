@@ -44,12 +44,11 @@ const Vertices = ({
     const scaledHeight = _height * scale * ratio;
 
     const el = (
-      <g ref={ref}>
+      <g ref={ref} key={body.id}>
         <use
           xlinkHref={`#${cloneID}`}
           width={px(scaledWidth)}
           height={px(scaledHeight)}
-          key={cloneID}
           x={px(-scaledWidth / 2)}
           y={px(-scaledHeight / 2)}
           {...cloneProps}
@@ -58,7 +57,7 @@ const Vertices = ({
     );
     body[cloneKey] = {
       key: svgKey,
-      domEl: ref.current!,
+      ref,
       el,
     };
 

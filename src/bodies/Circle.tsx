@@ -5,7 +5,6 @@ import { createElement } from '../util';
 import { createRef } from 'react';
 import Matter from 'matter-js';
 import Body from './Body';
-import { randomSuffix } from '../util';
 import { cloneKey, svgKey } from '../util/useClones';
 import { valueMemo } from '../util';
 
@@ -15,18 +14,10 @@ const Circle = ({ x, y, radius, clone = false, options, ...props }: Props) => {
 
     if (clone) {
       const ref = createRef<SVGCircleElement>();
-      const el = (
-        <circle
-          cx={-radius / 2}
-          cy={-radius / 2}
-          r={radius}
-          ref={ref}
-          key={`${body.id}__${randomSuffix}`}
-        />
-      );
+      const el = <circle cx={0} cy={0} r={radius} ref={ref} key={body.id} />;
       body[cloneKey] = {
         key: svgKey,
-        domEl: ref.current!,
+        ref,
         el,
       };
     }

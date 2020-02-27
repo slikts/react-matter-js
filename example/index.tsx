@@ -9,24 +9,36 @@ import {
   Circle,
   Constraint,
 } from '../src/.';
+import * as style from './style';
+import { Global, css } from '@emotion/core';
 
 const App = () => {
   const width = 600;
   const height = 400;
   return (
-    <div>
+    <div className={style.body}>
+      <Global
+        styles={css`
+          body {
+            background: #111;
+          }
+        `}
+      />
       <Engine options={{}}>
         <RenderClones
           enableMouse
           options={{
             width,
             height,
+            background: 'transparent',
+            wireframeBackground: 'transparent',
           }}
         >
           <Walls x={0} y={0} width={width} height={height} wallWidth={25} />
+          <Circle clone x={500} y={100} radius={50} />
           <Constraint>
-            <Circle x={100} y={100} radius={50} />
-            <Rectangle x={300} y={100} width={100} height={100} />
+            <Circle clone x={100} y={100} radius={50} />
+            <Rectangle clone x={300} y={100} width={100} height={100} />
           </Constraint>
         </RenderClones>
       </Engine>

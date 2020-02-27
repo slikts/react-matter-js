@@ -1,17 +1,20 @@
 import Matter from 'matter-js';
-import { useState, useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useEngine } from '../Engine';
 import DefaultMap from './DefaultMap';
 import TrackSet from './TrackSet';
+import { useUpdate } from '../util';
 
 const trackCats = (engine: Matter.Engine) => {
   const map: CatMap = new DefaultMap(() => new TrackSet());
   engine[catsKey] = map;
 
   Matter.Events.on(engine.world, 'afterAdd', ({ object }) => {
-    if (!object[catsKey]) {
+    if (!object[catsKey]?.length) {
       return;
     }
+    console.log(object[catsKey]);
+
     object[catsKey].forEach((key: CatKey) => void map.get(key).add(object));
   });
   Matter.Events.on(engine.world, 'afterRemove', ({ object }) => {
@@ -36,8 +39,9 @@ export type CatMap = DefaultMap<CatKey, Cat>;
 
 export const useCat = (key: CatKey) => {
   const engine = useEngine();
-  const [cat, setCat] = useState(engine[catsKey].get(key));
-  useEffect(() => {
+  const [cat, setCat] = useUpdate(engine[catsKey].get(key));
+
+  useLayoutEffect(() => {
     cat.track(setCat);
 
     return () => {

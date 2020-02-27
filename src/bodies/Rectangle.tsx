@@ -29,7 +29,7 @@ const Rectangle = ({
       );
       body[cloneKey] = {
         key: svgKey,
-        domEl: ref.current!,
+        ref,
         el,
       };
     }
