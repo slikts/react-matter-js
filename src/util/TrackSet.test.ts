@@ -10,4 +10,12 @@ describe(TrackSet.name, () => {
     expect(fn).toHaveBeenNthCalledWith(1, set);
     expect(fn).toHaveBeenNthCalledWith(2, set);
   });
+  it('untracks', () => {
+    const set = new TrackSet<number>();
+    const fn = jest.fn();
+    set.track(fn);
+    set.untrack(fn);
+    set.add(1);
+    expect(fn).not.toHaveBeenCalled();
+  });
 });
