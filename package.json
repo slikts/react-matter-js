@@ -1,0 +1,51 @@
+{
+  "name": "rmjs",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "slikts",
+  "main": "dist/index.js",
+  "module": "dist/rmjs.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --env=jsdom --passWithNoTests",
+    "lint": "tsdx lint"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^9.4.1",
+    "@types/jest": "^25.1.3",
+    "@types/node-sass": "^4.11.0",
+    "@types/react": "^16.9.22",
+    "@types/react-dom": "^16.9.5",
+    "husky": "^4.2.3",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "tsdx": "^0.12.3",
+    "tslib": "^1.11.0",
+    "typescript": "^3.8.2"
+  },
+  "dependencies": {
+    "@types/matter-js": "^0.10.9",
+    "matter-js": "^0.14.2",
+    "react-default-memo": "^1.0.2",
+    "tuplerone": "^3.4.0-beta.6"
+  }
+}
