@@ -8,6 +8,8 @@
   <img src="https://badgen.net/dependabot/slikts/react-matter-js" alt="Dependabot">
 </p>
 
+[**Demo**][demo].
+
 ## Install
 
 ```sh
@@ -21,3 +23,5 @@ npm i react-matter-js
 ## License
 
 MIT
+
+[demo]: https://codesandbox.io/s/react-matter-js-demo-pisno
