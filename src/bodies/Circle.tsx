@@ -2,7 +2,7 @@
 
 import { createElement } from '../util';
 
-import { createRef, useCallback } from 'react';
+import { createRef } from 'react';
 import Matter from 'matter-js';
 import Body from './Body';
 import { randomSuffix } from '../util';
@@ -18,7 +18,7 @@ type Props = {
 } & Omit<React.ComponentProps<typeof Body>, 'children'>;
 
 const Circle = ({ x, y, radius, clone = false, options, ...props }: Props) => {
-  const createBody = useCallback(() => {
+  const createBody = () => {
     const body = Matter.Bodies.circle(x, y, radius, options);
 
     if (clone) {
@@ -40,7 +40,7 @@ const Circle = ({ x, y, radius, clone = false, options, ...props }: Props) => {
     }
 
     return body;
-  }, [clone, options, radius, x, y]);
+  };
 
   return <Body {...props}>{createBody}</Body>;
 };

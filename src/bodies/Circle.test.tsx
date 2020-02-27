@@ -11,7 +11,6 @@ jest.mock('matter-js');
 
 describe('Circle', () => {
   it('renders', () => {
-    const ref: any = {};
-    render(<Circle x={0} y={0} radius={10} bodyRef={ref} />);
+    render(<Circle x={0} y={0} radius={10} />);
   });
 });

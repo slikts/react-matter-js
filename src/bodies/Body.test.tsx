@@ -11,7 +11,7 @@ jest.mock('matter-js');
 
 describe('Body', () => {
   it('renders', () => {
-    const fn = jest.fn();
+    const fn = jest.fn(() => ({} as any));
     render(<Body>{fn}</Body>);
     expect(fn).toHaveBeenCalled();
   });
