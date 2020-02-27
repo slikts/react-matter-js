@@ -8327,13 +8327,6 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-default-memo@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-default-memo/-/react-default-memo-1.0.2.tgz#e58847f966ed10f1e2f38326bcb359413f079cc1"
-  integrity sha512-7GWzmzEqI+KQQmlVPTxP40ePrsi26sV0Mq+8Q8x0GJRouMADnw3D++1QGxiul6nG5hCCV8g7xcTdQlnLqINwsA==
-  dependencies:
-    tuplerone "^3.4.0-beta.6"
-
 react-dom@^16.12.0:
   version "16.13.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.0.tgz#cdde54b48eb9e8a0ca1b3dc9943d9bb409b81866"

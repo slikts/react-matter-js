@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Matter from 'matter-js';
+import { SerializedStyles } from '@emotion/core';
 import { useEngine } from '../Engine';
 import { catsKey, CatKey } from '../util/trackCats';
 import { cloneKey } from '../util/useClones';
@@ -9,9 +10,14 @@ type Props = {
   children: () => Matter.Body;
   cats?: CatKey[];
   bodyRef?: React.MutableRefObject<Matter.Body | null>;
+  cloneClass?: string | SerializedStyles;
 };
 
-const Body = ({ children: createBody, cats = [], bodyRef }: Props) => {
+const Body = ({
+  children: createBody,
+  cats = [],
+  bodyRef,
+}: Omit<Props, 'cloneClass'>) => {
   const engine = useEngine();
   useEffect(() => {
     const body = createBody();

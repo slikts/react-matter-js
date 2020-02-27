@@ -35,7 +35,16 @@ const App = () => {
           }}
         >
           <Walls x={0} y={0} width={width} height={height} wallWidth={25} />
-          <Circle clone x={500} y={100} radius={50} />
+          <Circle
+            clone
+            x={500}
+            y={100}
+            radius={50}
+            className={css``}
+            cloneClass={css`
+              fill: #f06;
+            `}
+          />
           <Constraint>
             <Circle clone x={100} y={100} radius={50} />
             <Rectangle clone x={300} y={100} width={100} height={100} />

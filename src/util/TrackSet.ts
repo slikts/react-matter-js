@@ -4,7 +4,6 @@ export default class TrackSet<A> extends Set<A> {
   }
   add(a: A) {
     super.add(a);
-    console.log(this.subs);
 
     this.subs.forEach(sub => sub(this));
     return this;

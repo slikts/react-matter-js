@@ -52,7 +52,6 @@
     "@types/matter-js": "^0.10.9",
     "emotion": "^10.0.27",
     "matter-js": "^0.14.2",
-    "react-default-memo": "^1.0.2",
     "tuplerone": "^3.4.0-beta.6"
   },
   "browserslist": {

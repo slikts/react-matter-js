@@ -15,8 +15,6 @@ const RenderClones = ({ children, options, margin = 40, ...props }: Props) => {
   const { width, height } = options;
   const { dom, svg } = useClones();
 
-  console.log('render', dom, svg);
-
   return (
     <Render {...props} options={options}>
       <div className={cloneContainerStyle}>{dom}</div>

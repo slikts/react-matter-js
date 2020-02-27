@@ -13,7 +13,6 @@ const trackCats = (engine: Matter.Engine) => {
     if (!object[catsKey]?.length) {
       return;
     }
-    console.log(object[catsKey]);
 
     object[catsKey].forEach((key: CatKey) => void map.get(key).add(object));
   });

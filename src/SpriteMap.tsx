@@ -14,8 +14,6 @@ const { Provider } = SpriteContext;
 
 export const useSprites = () => useContext(SpriteContext);
 
-console.log(123);
-
 const ref = createRef<SVGSVGElement>();
 ReactDOM.render(
   <svg

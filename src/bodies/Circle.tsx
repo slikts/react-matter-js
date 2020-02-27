@@ -1,8 +1,4 @@
-/** @jsx createElement */
-
-import { createElement } from '../util';
-
-import { createRef } from 'react';
+import React, { createRef } from 'react';
 import Matter from 'matter-js';
 import Body from './Body';
 import { cloneKey, svgKey } from '../util/useClones';
