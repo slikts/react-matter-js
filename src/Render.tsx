@@ -6,7 +6,7 @@ import Matter from 'matter-js';
 
 import { useEngine } from './Engine';
 import { valueMemo } from './util';
-import styles from './Render.module.scss';
+import { css } from 'emotion';
 
 type Props = {
   options?: Matter.IRendererOptions;
@@ -38,14 +38,11 @@ const Render = ({
 
     if (enableMouse || mouseConstraintOptions) {
       const mouse = Matter.Mouse.create(render.canvas);
-
-      if (mouseConstraintOptions) {
-        const mouseConstraint = Matter.MouseConstraint.create(engine, {
-          ...mouseConstraintOptions,
-          mouse,
-        });
-        Matter.World.add(engine.world, mouseConstraint);
-      }
+      const mouseConstraint = Matter.MouseConstraint.create(engine, {
+        ...mouseConstraintOptions,
+        mouse,
+      });
+      Matter.World.add(engine.world, mouseConstraint);
     }
 
     return () => {
@@ -55,7 +52,18 @@ const Render = ({
   }, [engine, options, mouseConstraintOptions, enableMouse]);
 
   return (
-    <div {...props} ref={elementRef} className={styles.Render}>
+    <div
+      {...props}
+      ref={elementRef}
+      className={css`
+        display: inline-block;
+        position: relative;
+        canvas {
+          position: relative;
+          z-index: 1;
+        }
+      `}
+    >
       {children}
     </div>
   );

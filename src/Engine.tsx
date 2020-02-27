@@ -3,15 +3,6 @@ import Matter from 'matter-js';
 
 import { valueMemo } from './util';
 
-export const EngineContext = createContext<Matter.Engine>(null as any);
-const { Provider } = EngineContext;
-export const useEngine = () => useContext(EngineContext);
-
-type Props = {
-  options: Matter.IEngineDefinition;
-  children: React.ReactNode;
-};
-
 const Engine = ({ options, children }: Props) => {
   const [engine, setEngine] = useState<Matter.Engine | null>();
 
@@ -30,3 +21,14 @@ const Engine = ({ options, children }: Props) => {
 };
 
 export default valueMemo(Engine);
+
+type Props = {
+  options: Matter.IEngineDefinition;
+  children: React.ReactNode;
+};
+
+export const EngineContext = createContext<Matter.Engine>(null as any);
+const { Provider } = EngineContext;
+export const useEngine = () => useContext(EngineContext);
+
+export const cloneKey = Symbol('clone');
