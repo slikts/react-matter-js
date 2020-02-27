@@ -4,10 +4,12 @@ import { useEngine } from '../Engine';
 import DefaultMap from './DefaultMap';
 import TrackSet from './TrackSet';
 
-const useTrackCats = () => {
-  const engine = useEngine();
-
+const useTrackCats = (engine?: Matter.Engine) => {
   useEffect(() => {
+    if (!engine) {
+      return;
+    }
+
     const map: CatMap = new DefaultMap(() => new TrackSet());
     engine[catsKey] = map;
 
@@ -29,7 +31,7 @@ const useTrackCats = () => {
     return () => {
       engine[catsKey].clear();
     };
-  }, []);
+  }, [engine]);
 };
 
 export default useTrackCats;

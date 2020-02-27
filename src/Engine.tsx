@@ -1,10 +1,12 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import Matter from 'matter-js';
 
-import { valueMemo } from './util';
+import { valueMemo, useTrackCats } from './util';
 
 const Engine = ({ options, children }: Props) => {
-  const [engine, setEngine] = useState<Matter.Engine | null>();
+  const [engine, setEngine] = useState<Matter.Engine>();
+
+  useTrackCats(engine);
 
   useEffect(() => {
     const engine = Matter.Engine.create(options);
@@ -13,7 +15,6 @@ const Engine = ({ options, children }: Props) => {
     return () => {
       Matter.Engine.clear(engine);
       engine.enabled = false;
-      setEngine(null);
     };
   }, [options]);
 
