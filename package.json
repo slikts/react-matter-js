@@ -12,7 +12,8 @@
     "build": "tsdx build && node scripts/copyPackage.js",
     "test": "tsdx test --env=jsdom --passWithNoTests",
     "test:prod": "yarn test --coverage",
-    "lint": "tsdx lint"
+    "lint": "tsdx lint",
+    "tsc": "tsc --noEmit"
   },
   "peerDependencies": {
     "react": ">=16"

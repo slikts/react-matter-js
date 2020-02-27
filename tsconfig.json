@@ -1,5 +1,5 @@
 {
-  "include": ["src", "types", "test"],
+  "include": ["src"],
   "compilerOptions": {
     "target": "es6",
     "module": "esnext",
@@ -26,6 +26,7 @@
     },
     "jsx": "react",
     "esModuleInterop": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "skipLibCheck": true
   }
 }
