@@ -1,7 +1,7 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+// import React from 'react';
+// import { render } from '@testing-library/react';
 
-import Render from './Render';
+// import Render from './Render';
 
 describe('Render', () => {
   it('renders', () => {
