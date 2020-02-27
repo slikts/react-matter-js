@@ -11,7 +11,7 @@ type Props = {
   height: number;
   clone?: boolean;
   options?: Matter.IChamferableBodyDefinition;
-};
+} & Omit<React.ComponentProps<typeof Body>, 'children'>;
 
 const Rectangle = ({
   x,
@@ -48,4 +48,4 @@ const Rectangle = ({
   return <Body {...props}>{createBody}</Body>;
 };
 
-export default React.memo(Rectangle);
+export default Rectangle;

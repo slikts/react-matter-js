@@ -1,17 +1,17 @@
-import React from "react";
-import { render } from "@testing-library/react";
+import React from 'react';
+import { render } from '@testing-library/react';
 
-import Circle from "./Circle";
+import Circle from './Circle';
 
-jest.mock("../Engine", () => ({
-  useEngine: () => ({})
+jest.mock('../Engine', () => ({
+  useEngine: () => ({}),
 }));
 
-jest.mock("matter-js");
+jest.mock('matter-js');
 
-describe("Circle", () => {
-  it("renders", () => {
-    const ref = {};
-    render(<Circle bodyRef={ref} />);
+describe('Circle', () => {
+  it('renders', () => {
+    const ref: any = {};
+    render(<Circle x={0} y={0} radius={10} bodyRef={ref} />);
   });
 });

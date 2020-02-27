@@ -14,7 +14,7 @@ type Props = {
   flagInternal: boolean;
   cloneID?: number;
   cloneProps: object;
-};
+} & React.ComponentProps<typeof Body>;
 
 const Vertices = ({
   x,

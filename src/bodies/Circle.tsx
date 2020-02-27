@@ -11,9 +11,9 @@ type Props = {
   x: number;
   y: number;
   radius: number;
-  clone: any;
-  options: any;
-};
+  clone?: any;
+  options?: any;
+} & Omit<React.ComponentProps<typeof Body>, 'children'>;
 
 const Circle = ({
   x,
