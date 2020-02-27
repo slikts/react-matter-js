@@ -40,7 +40,7 @@ const Body = ({
         bodyRef.current = null;
       }
     };
-  }, [engine, createBody]);
+  }, [engine, createBody, cats, bodyRef]);
 
   return null;
 };

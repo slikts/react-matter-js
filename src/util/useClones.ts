@@ -26,7 +26,7 @@ const useClones = () => {
         ref.current!.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
       });
     });
-  }, []);
+  }, [bodies, engine]);
 
   return { dom, svg };
 };

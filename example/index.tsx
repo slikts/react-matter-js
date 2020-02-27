@@ -10,6 +10,7 @@ import {
   Constraint,
 } from '../src/.';
 import * as style from './style';
+import * as emotion from 'emotion';
 import { Global, css } from '@emotion/core';
 
 const App = () => {

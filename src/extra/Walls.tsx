@@ -1,7 +1,4 @@
-/** @jsx createElement */
-
-import { Fragment } from 'react';
-import { createElement } from '../util';
+import React, { Fragment } from 'react';
 
 import Rectangle from '../bodies/Rectangle';
 

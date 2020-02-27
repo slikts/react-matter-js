@@ -1,7 +1,4 @@
-/** @jsx createElement */
-
-import { createElement } from '../util';
-
+import React from 'react';
 import Matter from 'matter-js';
 import Vertices from '../bodies/Vertices';
 

@@ -46,7 +46,7 @@ export const useCat = (key: CatKey) => {
     return () => {
       cat.untrack(setCat);
     };
-  }, []);
+  }, [cat, setCat]);
 
   return cat;
 };

@@ -1,6 +1,3 @@
-/** @jsx createElement */
-
-import { createElement } from './util';
 import React, { useRef, useEffect } from 'react';
 import Matter from 'matter-js';
 

@@ -81,5 +81,17 @@
     "url": "https://github.com/slikts/react-matter-js/issues"
   },
   "homepage": "https://github.com/slikts/react-matter-js#readme",
-  "description": "React adapter for the Matter.js physics engine"
+  "description": "React adapter for the Matter.js physics engine",
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "prettier/@typescript-eslint",
+      "plugin:prettier/recommended"
+    ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
+  }
 }

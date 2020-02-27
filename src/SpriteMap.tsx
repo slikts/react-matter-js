@@ -1,3 +1,4 @@
+/*
 import React, {
   createContext,
   useContext,
@@ -38,7 +39,7 @@ type Props = {
 
 const SpriteMap = ({ docs, margin = 40, children }: Props) => {
   const [map, setMap] = useState<Map<string, any>>();
-  /*
+
   useEffect(() => {
     if (!docs || map) {
       return;
@@ -87,7 +88,8 @@ const SpriteMap = ({ docs, margin = 40, children }: Props) => {
     };
   }, [docs, map, margin]);
   return <Provider value={map}>{children}</Provider>;
-  */
+  
 };
 
 export default SpriteMap;
+*/

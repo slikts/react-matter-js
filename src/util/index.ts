@@ -14,9 +14,12 @@ const useRerender = () => {
 export const useUpdate = <A>(init: A) => {
   const rerender = useRerender();
   const [state, setState] = useState(init);
-  const updateState = useCallback((state: A) => {
-    setState(state);
-    rerender();
-  }, []);
+  const updateState = useCallback(
+    (state: A) => {
+      setState(state);
+      rerender();
+    },
+    [setState, rerender],
+  );
   return [state, updateState] as const;
 };
