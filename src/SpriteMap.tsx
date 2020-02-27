@@ -31,7 +31,7 @@ ReactDOM.render(
 // spriteMap.style.visibility = 'hidden';
 // spriteMap.style.position = 'absolute';
 // document.body.appendChild(spriteMap);
-
+//
 type Props = {
   docs: SVGElement[];
   margin?: number;
