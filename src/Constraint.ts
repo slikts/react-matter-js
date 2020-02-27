@@ -33,7 +33,7 @@ const Constraint = ({ children, length, ...options }: Props) => {
     cloneElement(children![key], {
       bodyRef,
       key,
-    })
+    }),
   );
 };
 

@@ -34,7 +34,7 @@ const Vertices = ({
       y,
       vertexSets,
       options,
-      flagInternal
+      flagInternal,
     );
 
     const ref = createRef<SVGSVGElement>();
