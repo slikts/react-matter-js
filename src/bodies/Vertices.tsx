@@ -1,20 +1,10 @@
 import React, { createRef } from 'react';
 import Matter from 'matter-js';
 import Body from './Body';
+import { cloneKey, svgKey } from '../util/useClones';
+import { valueMemo } from '../util';
 
 const px = (n: number) => `${n}px`;
-
-type Props = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  vertexSets: any;
-  options: object;
-  flagInternal: boolean;
-  cloneID?: number;
-  cloneProps: object;
-} & React.ComponentProps<typeof Body>;
 
 const Vertices = ({
   x,
@@ -53,7 +43,7 @@ const Vertices = ({
     const scaledWidth = _width * scale * ratio;
     const scaledHeight = _height * scale * ratio;
 
-    const svg = (
+    const el = (
       <g ref={ref}>
         <use
           xlinkHref={`#${cloneID}`}
@@ -66,9 +56,10 @@ const Vertices = ({
         />
       </g>
     );
-    body.clone = {
-      svg,
-      ref,
+    body[cloneKey] = {
+      key: svgKey,
+      domEl: ref.current!,
+      el,
     };
 
     return body;
@@ -77,4 +68,16 @@ const Vertices = ({
   return <Body {...props}>{createBody}</Body>;
 };
 
-export default Vertices;
+export default valueMemo(Vertices);
+
+type Props = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  vertexSets: any;
+  options: object;
+  flagInternal: boolean;
+  cloneID?: number;
+  cloneProps: object;
+} & React.ComponentProps<typeof Body>;

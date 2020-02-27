@@ -1,8 +1,46 @@
-import React, { createRef, useCallback } from 'react';
+import React, { createRef } from 'react';
 import Matter from 'matter-js';
-import { ValueObject } from 'tuplerone';
 import Body from './Body';
-import { randomSuffix } from '../util';
+import { cloneKey, svgKey } from '../util/useClones';
+import { valueMemo } from '../util';
+
+const Rectangle = ({
+  x,
+  y,
+  width,
+  height,
+  clone = false,
+  options,
+  ...props
+}: Props) => {
+  const createBody = () => {
+    const body = Matter.Bodies.rectangle(x, y, width, height, options);
+    if (clone) {
+      const ref = createRef<SVGRectElement>();
+      const el = (
+        <rect
+          x={-width / 2}
+          y={-height / 2}
+          width={width}
+          height={height}
+          ref={ref}
+          key={body.id}
+        />
+      );
+      body[cloneKey] = {
+        key: svgKey,
+        domEl: ref.current!,
+        el,
+      };
+    }
+
+    return body;
+  };
+
+  return <Body {...props}>{createBody}</Body>;
+};
+
+export default valueMemo(Rectangle);
 
 type Props = {
   x: number;
@@ -12,40 +50,3 @@ type Props = {
   clone?: boolean;
   options?: Matter.IChamferableBodyDefinition;
 } & Omit<React.ComponentProps<typeof Body>, 'children'>;
-
-const Rectangle = ({
-  x,
-  y,
-  width,
-  height,
-  clone = false,
-  options = ValueObject({}),
-  ...props
-}: Props) => {
-  const createBody = useCallback(() => {
-    const body = Matter.Bodies.rectangle(x, y, width, height, options);
-    if (clone) {
-      const ref = createRef<SVGRectElement>();
-      const svg = (
-        <rect
-          x={-width / 2}
-          y={-height / 2}
-          width={width}
-          height={height}
-          ref={ref}
-          key={`${body.id}__${randomSuffix}`}
-        />
-      );
-      body.clone = {
-        ref,
-        svg,
-      };
-    }
-
-    return body;
-  }, [clone, height, options, width, x, y]);
-
-  return <Body {...props}>{createBody}</Body>;
-};
-
-export default Rectangle;

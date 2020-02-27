@@ -3,7 +3,7 @@ import Matter from 'matter-js';
 import { useEngine } from './Engine';
 import { valueMemo } from './util';
 
-// TODO: return type?
+// TODO: return type
 const Constraint = ({ children, length, ...options }: Props): any => {
   const engine = useEngine();
 
