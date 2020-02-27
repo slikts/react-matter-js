@@ -4,37 +4,29 @@ import { useEngine } from '../Engine';
 import DefaultMap from './DefaultMap';
 import TrackSet from './TrackSet';
 
-const useTrackCats = (engine?: Matter.Engine) => {
-  useEffect(() => {
-    if (!engine) {
+const trackCats = (engine: Matter.Engine) => {
+  const map: CatMap = new DefaultMap(() => new TrackSet());
+  engine[catsKey] = map;
+
+  Matter.Events.on(engine.world, 'afterAdd', ({ object }) => {
+    if (!object[catsKey]) {
       return;
     }
+    object[catsKey].forEach((key: CatKey) => void map.get(key).add(object));
+  });
+  Matter.Events.on(engine.world, 'afterRemove', ({ object }) => {
+    if (!object[catsKey]) {
+      return;
+    }
+    object[catsKey].forEach((key: CatKey) => void map.get(key).delete(object));
+  });
 
-    const map: CatMap = new DefaultMap(() => new TrackSet());
-    engine[catsKey] = map;
-
-    Matter.Events.on(engine.world, 'afterAdd', ({ object }) => {
-      if (!object[catsKey]) {
-        return;
-      }
-      object[catsKey].forEach((key: CatKey) => void map.get(key).add(object));
-    });
-    Matter.Events.on(engine.world, 'afterRemove', ({ object }) => {
-      if (!object[catsKey]) {
-        return;
-      }
-      object[catsKey].forEach(
-        (key: CatKey) => void map.get(key).delete(object),
-      );
-    });
-
-    return () => {
-      engine[catsKey].clear();
-    };
-  }, [engine]);
+  return () => {
+    engine[catsKey].clear();
+  };
 };
 
-export default useTrackCats;
+export default trackCats;
 
 export const catsKey = Symbol('categories');
 
@@ -62,6 +54,6 @@ declare module 'matter-js' {
   }
 
   interface Body {
-    [catsKey]: Cat[];
+    [catsKey]: CatKey[];
   }
 }

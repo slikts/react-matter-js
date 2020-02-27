@@ -2,7 +2,8 @@ import React from 'react';
 import Matter from 'matter-js';
 import { css } from 'emotion';
 import Render from './Render';
-import { valueMemo, useClones } from './util';
+import { valueMemo } from './util';
+import useClones from './util/useClones';
 
 type Props = {
   children: React.ReactNode;

@@ -1,13 +1,13 @@
 import Matter from 'matter-js';
 import React, { useEffect } from 'react';
 import { useEngine } from '../Engine';
-import { useCat } from './useTrackCats';
+import { useCat, Cat } from './trackCats';
 
 const useClones = () => {
   const engine = useEngine();
   const bodies = useCat(cloneKey);
-  const dom = useCat('domClone');
-  const svg = useCat('domClone');
+  const dom = pickEls(useCat(domKey));
+  const svg = pickEls(useCat(svgKey));
 
   useEffect(() => {
     Matter.Events.on(engine, 'afterUpdate', () => {
@@ -17,9 +17,9 @@ const useClones = () => {
         }
 
         const { x, y } = body.position!;
-        const clone = body[cloneKey].ref.current;
+        const { domEl } = body[cloneKey]!;
 
-        clone.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
+        domEl.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
       });
     });
   }, []);
@@ -29,12 +29,27 @@ const useClones = () => {
 
 export default useClones;
 
+const pickEls = (cat: Cat) => Array.from(cat, body => body[cloneKey]!.el);
+
 export const cloneKey = Symbol('clone');
+export const svgKey = Symbol('SVG clone');
+export const domKey = Symbol('DOM clone');
+
+type Clone = {
+  el: React.ReactElement;
+} & (
+  | {
+      key: typeof domKey;
+      domEl: HTMLElement;
+    }
+  | {
+      key: typeof svgKey;
+      domEl: SVGElement;
+    }
+);
 
 declare module 'matter-js' {
   interface Body {
-    [cloneKey]: {
-      ref: React.MutableRefObject<HTMLElement>;
-    };
+    [cloneKey]?: Clone;
   }
 }

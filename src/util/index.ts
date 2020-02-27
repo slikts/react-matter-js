@@ -1,5 +1,3 @@
-export { default as useTrackCats, catsKey } from './useTrackCats';
-export { default as useClones, cloneKey } from './useClones';
 export { default as valueMemo } from './valueMemo';
 
 import { createValueElement } from 'react-default-memo';
