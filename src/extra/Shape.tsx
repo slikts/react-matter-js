@@ -1,11 +1,7 @@
 import React from 'react';
 import Matter from 'matter-js';
 import Vertices from '../bodies/Vertices';
-
-type Props = {
-  paths: SVGPathElement[];
-  sampleLength?: number;
-} & React.ComponentProps<typeof Vertices>;
+import 'pathseg';
 
 const Shape = ({ paths, sampleLength = 30, ...props }: Props) => {
   if (!paths) {
@@ -20,3 +16,11 @@ const Shape = ({ paths, sampleLength = 30, ...props }: Props) => {
 };
 
 export default Shape;
+
+type Props = {
+  paths: SVGPathElement[];
+  sampleLength?: number;
+} & React.ComponentProps<typeof Vertices>;
+
+// @ts-ignore
+window.decomp = require('poly-decomp');

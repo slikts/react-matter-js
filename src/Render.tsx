@@ -45,6 +45,8 @@ const Render = ({
     return () => {
       Matter.Render.stop(render);
       Matter.Runner.stop(runner);
+      render.canvas.remove();
+      render.textures = {};
     };
   }, [engine, options, mouseConstraintOptions, enableMouse]);
 

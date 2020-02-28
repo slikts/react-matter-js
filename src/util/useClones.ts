@@ -10,7 +10,7 @@ const useClones = () => {
   const svg = pickEls(useCat(svgKey));
 
   useEffect(() => {
-    Matter.Events.on(engine, 'afterUpdate', () => {
+    const afterUpdate = () => {
       bodies.forEach(body => {
         if (body.isSleeping) {
           return;
@@ -25,7 +25,11 @@ const useClones = () => {
         }
         ref.current!.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
       });
-    });
+    };
+    Matter.Events.on(engine, 'afterUpdate', afterUpdate);
+    return () => {
+      Matter.Events.off(engine, 'afterUpdate', afterUpdate);
+    };
   }, [bodies, engine]);
 
   return { dom, svg };

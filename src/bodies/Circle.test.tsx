@@ -20,5 +20,6 @@ jest.mock('matter-js', () => ({
 describe('Circle', () => {
   it('renders', () => {
     render(<Circle x={0} y={0} radius={10} />);
+    expect(1).toBe(2);
   });
 });

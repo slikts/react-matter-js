@@ -3,28 +3,33 @@ import { useLayoutEffect } from 'react';
 import { useEngine } from '../Engine';
 import DefaultMap from './DefaultMap';
 import TrackSet from './TrackSet';
-import { useUpdate } from '../util';
+import { useRerender } from '../util';
 
 const trackCats = (engine: Matter.Engine) => {
-  const map: CatMap = new DefaultMap(() => new TrackSet());
-  engine[catsKey] = map;
+  const cats: CatMap = new DefaultMap(() => new TrackSet());
+  engine[catsKey] = cats;
 
-  Matter.Events.on(engine.world, 'afterAdd', ({ object }) => {
-    if (!object[catsKey]?.length) {
+  const afterAdd = ({ object: body }: { object: Matter.Body }) => {
+    if (!body[catsKey]?.length) {
       return;
     }
-
-    object[catsKey].forEach((key: CatKey) => void map.get(key).add(object));
-  });
-  Matter.Events.on(engine.world, 'afterRemove', ({ object }) => {
-    if (!object[catsKey]) {
+    body[catsKey].forEach((key: CatKey) => void cats.get(key).add(body));
+  };
+  const afterRemove = ({ object: body }: { object: Matter.Body }) => {
+    if (!body[catsKey]) {
       return;
     }
-    object[catsKey].forEach((key: CatKey) => void map.get(key).delete(object));
-  });
+    body[catsKey].forEach((key: CatKey) => void cats.get(key).delete(body));
+  };
+
+  Matter.Events.on(engine.world, 'afterAdd', afterAdd);
+  Matter.Events.on(engine.world, 'afterRemove', afterRemove);
 
   return () => {
-    engine[catsKey].clear();
+    Matter.Events.off(engine.world, 'afterAdd', afterAdd);
+    Matter.Events.off(engine.world, 'afterRemove', afterRemove);
+    cats.forEach(cat => void cat.clear());
+    cats.clear();
   };
 };
 
@@ -38,15 +43,16 @@ export type CatMap = DefaultMap<CatKey, Cat>;
 
 export const useCat = (key: CatKey) => {
   const engine = useEngine();
-  const [cat, setCat] = useUpdate(engine[catsKey].get(key));
+  const rerender = useRerender();
+  const cat = engine[catsKey].get(key);
 
   useLayoutEffect(() => {
-    cat.track(setCat);
+    cat.track(rerender);
 
     return () => {
-      cat.untrack(setCat);
+      cat.untrack(rerender);
     };
-  }, [cat, setCat]);
+  }, [cat, rerender]);
 
   return cat;
 };

@@ -21,6 +21,11 @@ export default class TrackSet<A> extends Set<A> {
   untrack(sub: Sub<A>) {
     this.subs.delete(sub);
   }
+  clear() {
+    super.clear();
+    this.subs.forEach(sub => sub(this));
+    this.subs.clear();
+  }
 }
 
 type Sub<A> = (a: TrackSet<A>) => void;
