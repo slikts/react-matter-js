@@ -1,10 +1,10 @@
 import React from 'react';
 import Matter from 'matter-js';
 import Render from '../Render';
-
+import Walls from './Walls';
 import Engine from '../Engine';
 import RenderClones from './RenderClones';
-import { valueMemo } from '../util';
+import { valueMemo, relX, relY } from '../util';
 
 const Scene = ({
   width = 720,
@@ -14,6 +14,8 @@ const Scene = ({
   rendererProps = {},
   mouse = true,
   gravity,
+  walled = false,
+  wallWidth = 50,
   children,
 }: Props) => {
   const rendererOptions = {
@@ -26,6 +28,21 @@ const Scene = ({
   };
   const key = `${rendererOptions.width}-${rendererOptions.height}`;
 
+  const wall = walled ? (
+    <Walls
+      x={-wallWidth}
+      y={-wallWidth}
+      width={engine => relX(1)(engine) + wallWidth}
+      height={engine => relY(1)(engine) + wallWidth}
+      wallWidth={wallWidth}
+      options={{
+        render: {
+          visible: false,
+        },
+      }}
+    />
+  ) : null;
+
   return (
     <Engine options={engineOptions} key={key}>
       <RenderClones
@@ -33,6 +50,7 @@ const Scene = ({
         options={rendererOptions}
         enableMouse={mouse}
       >
+        {wall}
         {(engine: Matter.Engine) => {
           Object.assign(engine.world.gravity, gravity);
 
@@ -61,5 +79,7 @@ type Props = {
   rendererProps?: RendererProps;
   mouse?: boolean;
   gravity?: Gravity;
+  walled?: boolean;
+  wallWidth?: number;
   children: React.ReactNode;
 };
