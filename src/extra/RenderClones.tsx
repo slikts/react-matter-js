@@ -1,17 +1,17 @@
 import React from 'react';
 import Matter from 'matter-js';
 import { css } from 'emotion';
-import Render from './Render';
-import { valueMemo } from './util';
-import useClones from './util/useClones';
+import Render from '../Render';
+import { valueMemo } from '../util';
+import useClones from '../util/useClones';
 
-type Props = {
-  children: React.ReactNode;
-  options: Matter.IRendererOptions;
-  margin?: number;
-} & React.ComponentProps<typeof Render>;
-
-const RenderClones = ({ children, options, margin = 40, ...props }: Props) => {
+const RenderClones = ({
+  children,
+  options = {},
+  // TODO: ?
+  margin = 40,
+  ...props
+}: Props) => {
   const { width, height } = options;
   const { dom, svg } = useClones();
 
@@ -28,8 +28,16 @@ const RenderClones = ({ children, options, margin = 40, ...props }: Props) => {
 
 export default valueMemo(RenderClones);
 
+type Props = {
+  children?: React.ReactNode;
+  options?: Matter.IRendererOptions;
+  margin?: number;
+} & React.ComponentProps<typeof Render>;
+
 const cloneContainerStyle = css`
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   fill: #f60;

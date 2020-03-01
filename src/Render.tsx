@@ -1,19 +1,13 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Matter from 'matter-js';
+import { shallow } from 'tuplerone';
 
 import { useEngine } from './Engine';
 import { valueMemo } from './util';
 import { css } from 'emotion';
 
-type Props = {
-  options?: Matter.IRendererOptions;
-  enableMouse?: boolean;
-  mouseConstraintOptions?: Matter.IMouseConstraintDefinition;
-  children: React.ReactNode;
-};
-
 const Render = ({
-  options = {},
+  options,
   enableMouse = false,
   mouseConstraintOptions,
   children,
@@ -21,51 +15,83 @@ const Render = ({
 }: Props) => {
   const elementRef = useRef<HTMLDivElement>(null);
   const engine = useEngine();
+  const [render, setRender] = useState<Matter.Render | null>(null);
+  const { width } = options;
 
   useEffect(() => {
-    const render = Matter.Render.create({
-      element: elementRef.current!,
-      engine,
-      options,
-    });
+    const render = shallow(
+      Matter.Render.create({
+        element: elementRef.current!,
+        engine,
+        options,
+      }),
+    );
+    engine.render = render;
+    setRender(render);
     Matter.Render.run(render);
 
-    const runner = Matter.Runner.create();
+    const runner = shallow(Matter.Runner.create());
     Matter.Runner.run(runner, engine);
 
     if (enableMouse || mouseConstraintOptions) {
-      const mouse = Matter.Mouse.create(render.canvas);
-      const mouseConstraint = Matter.MouseConstraint.create(engine, {
-        ...mouseConstraintOptions,
-        mouse,
-      });
+      const mouse = shallow(Matter.Mouse.create(render.canvas));
+      const mouseConstraint = shallow(
+        Matter.MouseConstraint.create(engine, {
+          ...mouseConstraintOptions,
+          mouse,
+        }),
+      );
       Matter.World.add(engine.world, mouseConstraint);
     }
 
     return () => {
       Matter.Render.stop(render);
-      Matter.Runner.stop(runner);
       render.canvas.remove();
+      // @ts-ignore
+      render.canvas = null;
+      // @ts-ignore
+      render.context = null;
+      Matter.Runner.stop(runner);
       render.textures = {};
     };
-  }, [engine, options, mouseConstraintOptions, enableMouse]);
+  }, [engine, options, mouseConstraintOptions, enableMouse, setRender]);
 
   return (
     <div
       {...props}
       ref={elementRef}
       className={css`
-        display: inline-block;
+        display: block;
+        width: ${width}px;
         position: relative;
         canvas {
           position: relative;
+          display: block;
           z-index: 1;
         }
       `}
     >
-      {children}
+      {render ? renderChildren(children, engine) : null}
     </div>
   );
 };
 
 export default valueMemo(Render);
+
+type Props = {
+  options: Matter.IRendererOptions;
+  enableMouse?: boolean;
+  mouseConstraintOptions?: Matter.IMouseConstraintDefinition;
+  children?: React.ReactNode;
+};
+
+type RenderFn = (engine: Matter.Engine) => React.ReactNode;
+const renderChildren = (
+  children: React.ReactNode | RenderFn,
+  engine: Matter.Engine,
+): React.ReactNode => {
+  if (Array.isArray(children)) {
+    return children.map(child => renderChildren(child, engine));
+  }
+  return typeof children === 'function' ? children(engine) : children;
+};

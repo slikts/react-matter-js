@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
+import * as windowSize from '@react-hook/window-size';
 
-export { default as valueMemo } from './valueMemo';
+export { default as valueMemo, valueCompare } from './valueMemo';
 export const randomSuffix = Math.round(Math.random() * 1e10).toString(32);
 
 export const cESVG = (name: string) =>
@@ -10,3 +11,10 @@ export const useRerender = () => {
   const [, updateState] = useState();
   return useCallback(() => updateState(Symbol()), []);
 };
+
+export const useWindowSize = () => {
+  const [width, height] = windowSize.useWindowSize();
+  return { width, height };
+};
+
+export * from './size';

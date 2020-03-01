@@ -2,15 +2,22 @@ import React, { createRef } from 'react';
 import Matter from 'matter-js';
 import Body from './Body';
 import { cloneKey, svgKey } from '../util/useClones';
-import { valueMemo } from '../util';
+import { valueMemo, Size, mapSizes } from '../util';
 
 const Circle = ({ x, y, radius, clone = false, options, ...props }: Props) => {
+  const sizes = mapSizes({
+    x,
+    y,
+    radius,
+  });
   const createBody = () => {
-    const body = Matter.Bodies.circle(x, y, radius, options);
+    const body = Matter.Bodies.circle(sizes.x, sizes.y, sizes.radius, options);
 
     if (clone) {
       const ref = createRef<SVGCircleElement>();
-      const el = <circle cx={0} cy={0} r={radius} ref={ref} key={body.id} />;
+      const el = (
+        <circle cx={0} cy={0} r={sizes.radius} ref={ref} key={body.id} />
+      );
       body[cloneKey] = {
         key: svgKey,
         ref,
@@ -27,9 +34,9 @@ const Circle = ({ x, y, radius, clone = false, options, ...props }: Props) => {
 export default valueMemo(Circle);
 
 type Props = {
-  x: number;
-  y: number;
-  radius: number;
+  x: Size;
+  y: Size;
+  radius: Size;
   clone?: boolean;
   options?: Matter.IBodyDefinition;
 } & Omit<React.ComponentProps<typeof Body>, 'children'>;

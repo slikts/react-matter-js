@@ -1,45 +1,39 @@
 import React, { Fragment } from 'react';
 
 import Rectangle from '../bodies/Rectangle';
+import { Size, mapSizes } from '../util';
 
-type Props = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  wallWidth?: number;
-  options?: React.ComponentProps<typeof Rectangle>['options'];
-};
-
-const Walls = ({ x, y, width, height, wallWidth = 25, options }: Props) => {
-  const props = {
+const Walls = (props: Props) => {
+  const defaultProps = {
     options: {
-      ...options,
+      ...props.options,
       isStatic: true,
     },
   };
 
+  const { x, y, width, height, wallWidth } = mapSizes(pickSizes(props));
+
   const top = {
-    ...props,
+    ...defaultProps,
     x: x + width / 2,
     y: y + wallWidth / 2,
     width: width,
     height: wallWidth,
   };
   const bottom = {
-    ...props,
+    ...defaultProps,
     ...top,
     y: height - wallWidth / 2,
   };
   const left = {
-    ...props,
+    ...defaultProps,
     x: x + wallWidth / 2,
     y: y + height / 2,
-    height: height + wallWidth * 2,
+    height: height,
     width: wallWidth,
   };
   const right = {
-    ...props,
+    ...defaultProps,
     ...left,
     x: width - wallWidth / 2,
   };
@@ -55,3 +49,26 @@ const Walls = ({ x, y, width, height, wallWidth = 25, options }: Props) => {
 };
 
 export default Walls;
+
+type Props = {
+  x: Size;
+  y: Size;
+  width: Size;
+  height: Size;
+  wallWidth?: Size;
+  options?: React.ComponentProps<typeof Rectangle>['options'];
+};
+
+const pickSizes = ({
+  x,
+  y,
+  width,
+  height,
+  wallWidth = 100,
+}: Pick<Props, 'x' | 'y' | 'width' | 'height' | 'wallWidth'>) => ({
+  x,
+  y,
+  width,
+  height,
+  wallWidth,
+});

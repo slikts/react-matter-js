@@ -1,7 +1,9 @@
-import { useEffect, cloneElement, useRef } from 'react';
+import { useEffect, cloneElement, useRef, memo } from 'react';
 import Matter from 'matter-js';
+import { shallow } from 'tuplerone';
+
 import { useEngine } from './Engine';
-import { valueMemo } from './util';
+import { valueCompare } from './util';
 
 // TODO: return type
 const Constraint = ({ children, length, ...options }: Props): any => {
@@ -13,12 +15,14 @@ const Constraint = ({ children, length, ...options }: Props): any => {
   useEffect(() => {
     const { current: bodyA } = bodyARef;
     const { current: bodyB } = bodyBRef;
-    const constraint = Matter.Constraint.create({
-      bodyA,
-      bodyB,
-      length,
-      ...options,
-    });
+    const constraint = shallow(
+      Matter.Constraint.create({
+        bodyA,
+        bodyB,
+        length,
+        ...options,
+      }),
+    );
     Matter.World.add(engine.world, constraint);
 
     return () => {
@@ -39,4 +43,4 @@ type Props = {
   length?: number;
 };
 
-export default valueMemo(Constraint);
+export default memo(Constraint, valueCompare);

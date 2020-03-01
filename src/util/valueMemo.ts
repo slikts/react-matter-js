@@ -1,14 +1,8 @@
-import {
-  PropsWithChildren,
-  memo,
-  ComponentType,
-  MemoExoticComponent,
-} from 'react';
+import { PropsWithChildren, memo, ComponentType } from 'react';
 import { ValueObject } from 'tuplerone';
 
-const valueMemo = <A>(
-  component: ComponentType<A>,
-): MemoExoticComponent<ComponentType<A>> => memo(component, valueCompare);
+const valueMemo = <A>(component: ComponentType<A>) =>
+  memo(component, valueCompare);
 
 export default valueMemo;
 

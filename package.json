@@ -49,11 +49,14 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",
+    "@react-hook/window-size": "^1.0.13",
     "@types/matter-js": "^0.10.9",
     "emotion": "^10.0.27",
+    "immer": "^5.3.6",
     "matter-js": "^0.14.2",
     "pathseg": "^1.2.0",
     "poly-decomp": "^0.3.0",
+    "src": "^1.1.2",
     "svgpath": "^2.2.3",
     "tuplerone": "^3.4.0-beta.6"
   },

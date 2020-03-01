@@ -6,7 +6,7 @@ import { valueMemo } from './util';
 import trackCats from './util/trackCats';
 
 const Engine = ({ options, children }: Props) => {
-  const [engine, setEngine] = useState<Matter.Engine | null>();
+  const [engine, setEngine] = useState<Matter.Engine | null>(null);
 
   useEffect(() => {
     const engine = shallow(Matter.Engine.create(options));
@@ -14,6 +14,7 @@ const Engine = ({ options, children }: Props) => {
     const clearCats = trackCats(engine);
 
     return () => {
+      Matter.World.clear(engine.world, false);
       Matter.Engine.clear(engine);
       engine.enabled = false;
       clearCats();
