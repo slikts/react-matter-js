@@ -25,7 +25,7 @@ const Vertices = ({
       flagInternal,
     );
 
-    const ref = createRef<SVGSVGElement>();
+    const ref = createRef<SVGGElement>();
     const { min, max } = body.bounds;
     const boundWidth = max.x - min.x;
     const boundHeight = max.y - min.y;

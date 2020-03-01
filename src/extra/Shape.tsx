@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Matter from 'matter-js';
 import 'pathseg';
 import Vertices from '../bodies/Vertices';
 import { useSprite } from '../util/SpriteMap';
 
 const Shape = ({ clone = false, path, sampleLength = 30, ...props }: Props) => {
-  const vertexSets = [Matter.Svg.pathToVertices(path, sampleLength)];
+  const vertexSets = useMemo(
+    () => [Matter.Svg.pathToVertices(path, sampleLength)],
+    [path, sampleLength],
+  );
   const sprite = useSprite(path);
 
   return (

@@ -33,7 +33,7 @@ const Body = ({
       Matter.World.remove(engine.world, body);
 
       if (bodyRef) {
-        bodyRef.current = null;
+        bodyRef.current = undefined;
       }
     };
   }, [engine, createBody, cats, bodyRef, sizes]);
@@ -46,9 +46,10 @@ export default valueMemo(Body);
 type Props = {
   children: () => Matter.Body;
   cats?: CatKey[];
-  bodyRef?: React.MutableRefObject<Matter.Body | null>;
+  bodyRef?: BodyRef;
   sizes?: Sizes;
 };
+export type BodyRef = React.MutableRefObject<Matter.Body | undefined>;
 
 export const sizesKey = Symbol('sizes');
 

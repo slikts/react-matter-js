@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, MutableRefObject } from 'react';
 import * as windowSize from '@react-hook/window-size';
 
 export const getRandom = (length: number = 1e10) =>
@@ -17,4 +17,9 @@ export const useRerender = () => {
 export const useWindowSize = () => {
   const [width, height] = windowSize.useWindowSize();
   return { width, height };
+};
+
+export const useForwardRef = <A>(ref?: MutableRefObject<A>) => {
+  const innerRef = useRef<A>();
+  return ref ? ref : innerRef;
 };

@@ -1,24 +1,27 @@
-import { useEffect, cloneElement, useRef, memo } from 'react';
+import { useEffect, cloneElement, memo } from 'react';
 import Matter from 'matter-js';
 import { shallow } from 'tuplerone';
 
 import { useEngine } from './Engine';
-import { valueCompare } from './util';
+import { valueCompare, useForwardRef } from './util';
+import { BodyRef } from './bodies/Body';
 
 // TODO: return type
 const Constraint = ({ children, length, ...options }: Props): any => {
   const engine = useEngine();
 
-  const bodyARef = useRef();
-  const bodyBRef = useRef();
+  const [childA, childB] = children;
+  const bodyRefA = useForwardRef(childA.props.bodyRef);
+  const bodyRefB = useForwardRef(childB.props.bodyRef);
 
   useEffect(() => {
-    const { current: bodyA } = bodyARef;
-    const { current: bodyB } = bodyBRef;
+    const { current: bodyA } = bodyRefA;
+    const { current: bodyB } = bodyRefB;
+
     const constraint = shallow(
       Matter.Constraint.create({
-        bodyA,
-        bodyB,
+        bodyA: bodyA!,
+        bodyB: bodyB!,
         length,
         ...options,
       }),
@@ -28,10 +31,10 @@ const Constraint = ({ children, length, ...options }: Props): any => {
     return () => {
       Matter.World.remove(engine.world, constraint);
     };
-  }, [options, engine, length]);
+  }, [options, engine, length, bodyRefA, bodyRefB]);
 
-  return [bodyARef, bodyBRef].map((bodyRef, key) =>
-    cloneElement(children![key], {
+  return [bodyRefA, bodyRefB].map((bodyRef, key) =>
+    cloneElement(children[key], {
       bodyRef,
       key,
     }),
@@ -39,8 +42,9 @@ const Constraint = ({ children, length, ...options }: Props): any => {
 };
 
 type Props = {
-  children: [React.ReactElement, React.ReactElement];
+  children: [Element, Element];
   length?: number;
 };
+type Element = React.ReactElement<{ bodyRef: BodyRef }>;
 
 export default memo(Constraint, valueCompare);
