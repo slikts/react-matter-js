@@ -1,5 +1,5 @@
 import Matter from 'matter-js';
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import { useEngine } from '../Engine';
 import DefaultMap from './DefaultMap';
 import TrackSet from './TrackSet';
@@ -46,7 +46,7 @@ export const useCat = (key: CatKey) => {
   const rerender = useRerender();
   const cat = engine[catsKey].get(key);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     cat.track(rerender);
 
     return () => {

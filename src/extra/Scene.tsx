@@ -24,10 +24,10 @@ const Scene = ({
     pixelRatio,
     ...rendererProps.options,
   };
-  const engineKey = `${rendererOptions.width}-${rendererOptions.height}`;
+  const key = `${rendererOptions.width}-${rendererOptions.height}`;
 
   return (
-    <Engine options={engineOptions} key={engineKey}>
+    <Engine options={engineOptions} key={key}>
       <RenderClones
         {...rendererProps}
         options={rendererOptions}

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Matter from 'matter-js';
 import { SerializedStyles } from '@emotion/core';
-import { shallow, ValueObject } from 'tuplerone';
+import { shallow } from 'tuplerone';
 import { useEngine } from '../Engine';
 import { catsKey, CatKey } from '../util/trackCats';
 import { cloneKey } from '../util/useClones';
@@ -9,9 +9,9 @@ import { valueMemo, Sizes } from '../util';
 
 const Body = ({
   children: createBody,
-  cats = ValueObject([]),
+  cats = [],
   bodyRef,
-  sizes = ValueObject({}),
+  sizes = {},
 }: Omit<Props, 'cloneClass'>) => {
   const engine = useEngine();
   useEffect(() => {
