@@ -32,28 +32,30 @@ const Vertices = ({
     const scale = Math.min(width / boundWidth, height / boundHeight);
     Matter.Body.scale(body, scale, scale);
 
-    // TODO: use actual pixel ratio
-    const ratio = 1;
-    const scaledWidth = boundWidth * scale * ratio;
-    const scaledHeight = boundHeight * scale * ratio;
+    if (cloneID) {
+      // TODO: use actual pixel ratio
+      const ratio = 1;
+      const scaledWidth = boundWidth * scale * ratio;
+      const scaledHeight = boundHeight * scale * ratio;
 
-    const el = (
-      <g ref={ref} key={body.id}>
-        <use
-          xlinkHref={`#${cloneID}`}
-          width={px(scaledWidth)}
-          height={px(scaledHeight)}
-          x={px(-scaledWidth / 2)}
-          y={px(-scaledHeight / 2)}
-          {...cloneProps}
-        />
-      </g>
-    );
-    body[cloneKey] = {
-      key: svgKey,
-      ref,
-      el,
-    };
+      const el = (
+        <g ref={ref} key={body.id}>
+          <use
+            xlinkHref={`#${cloneID}`}
+            width={px(scaledWidth)}
+            height={px(scaledHeight)}
+            x={px(-scaledWidth / 2)}
+            y={px(-scaledHeight / 2)}
+            {...cloneProps}
+          />
+        </g>
+      );
+      body[cloneKey] = {
+        key: svgKey,
+        ref,
+        el,
+      };
+    }
 
     return body;
   };
@@ -71,7 +73,7 @@ type Props = {
   vertexSets: any;
   options: object;
   flagInternal: boolean;
-  cloneID?: string;
+  cloneID?: string | null;
   cloneProps: object;
 } & React.ComponentProps<typeof Body>;
 
