@@ -1,17 +1,17 @@
 import React, { Fragment } from 'react';
 
 import Rectangle from '../bodies/Rectangle';
-import { Size, mapSizes } from '../util';
+import { Size, useMapSizes } from '../util';
 
-const Walls = (props: Props) => {
+const Walls = ({ options, ...props }: Props) => {
   const defaultProps = {
     options: {
-      ...props.options,
+      ...options,
       isStatic: true,
     },
   };
 
-  const { x, y, width, height, wallWidth } = mapSizes(pickSizes(props));
+  const { x, y, width, height, wallWidth } = useMapSizes(pickSizes(props));
 
   const top = {
     ...defaultProps,

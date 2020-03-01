@@ -21,5 +21,7 @@ export const mapEntries = <A, B>(
   fn: (entry: [string, A]) => [string, B],
 ) => Object.fromEntries(Object.entries(object).map(fn));
 
-export const mapSizes = (sizes: Sizes) =>
-  mapEntries(sizes, ([key, value]) => [key, getSize(value, useEngine())]);
+export const useMapSizes = (sizes: Sizes) => {
+  const engine = useEngine();
+  return mapEntries(sizes, ([key, value]) => [key, getSize(value, engine)]);
+};

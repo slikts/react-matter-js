@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import Matter from 'matter-js';
-import { SerializedStyles } from '@emotion/core';
 import { shallow } from 'tuplerone';
 import { useEngine } from '../Engine';
 import { catsKey, CatKey } from '../util/trackCats';
@@ -12,7 +11,7 @@ const Body = ({
   cats = [],
   bodyRef,
   sizes = {},
-}: Omit<Props, 'cloneClass'>) => {
+}: Props) => {
   const engine = useEngine();
   useEffect(() => {
     const body = shallow(createBody());
@@ -48,7 +47,6 @@ type Props = {
   children: () => Matter.Body;
   cats?: CatKey[];
   bodyRef?: React.MutableRefObject<Matter.Body | null>;
-  cloneClass?: string | SerializedStyles;
   sizes?: Sizes;
 };
 
