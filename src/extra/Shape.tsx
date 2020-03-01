@@ -1,24 +1,22 @@
 import React from 'react';
 import Matter from 'matter-js';
-import Vertices from '../bodies/Vertices';
 import 'pathseg';
+import Vertices from '../bodies/Vertices';
+import { useSprite } from '../util/SpriteMap';
 
-const Shape = ({ paths, sampleLength = 30, ...props }: Props) => {
-  if (!paths) {
-    return null;
-  }
+const Shape = ({ path, sampleLength = 30, ...props }: Props) => {
+  const vertexSets = [Matter.Svg.pathToVertices(path, sampleLength)];
+  const sprite = useSprite(path);
 
-  const vertexSets = paths.map(path =>
-    Matter.Svg.pathToVertices(path, sampleLength),
-  );
+  console.log(sprite);
 
-  return <Vertices vertexSets={vertexSets} {...props} />;
+  return <Vertices cloneID={sprite} vertexSets={vertexSets} {...props} />;
 };
 
 export default Shape;
 
 type Props = {
-  paths: SVGPathElement[];
+  path: SVGPathElement;
   sampleLength?: number;
 } & React.ComponentProps<typeof Vertices>;
 

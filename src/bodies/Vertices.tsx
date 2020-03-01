@@ -4,8 +4,6 @@ import Body from './Body';
 import { cloneKey, svgKey } from '../util/useClones';
 import { valueMemo } from '../util';
 
-const px = (n: number) => `${n}px`;
-
 const Vertices = ({
   x,
   y,
@@ -29,19 +27,15 @@ const Vertices = ({
 
     const ref = createRef<SVGSVGElement>();
     const { min, max } = body.bounds;
-
-    const _width = max.x - min.x;
-    const _height = max.y - min.y;
-    const scale = Math.min(width / _width, height / _height);
+    const boundWidth = max.x - min.x;
+    const boundHeight = max.y - min.y;
+    const scale = Math.min(width / boundWidth, height / boundHeight);
     Matter.Body.scale(body, scale, scale);
-    // const viewBox = parseViewbox(
-    //   document.querySelector(`#${cloneID}`).getAttribute("viewBox")
-    // );
 
-    // XXX: why?
-    const ratio = 1.4;
-    const scaledWidth = _width * scale * ratio;
-    const scaledHeight = _height * scale * ratio;
+    // TODO: use actual pixel ratio
+    const ratio = 1;
+    const scaledWidth = boundWidth * scale * ratio;
+    const scaledHeight = boundHeight * scale * ratio;
 
     const el = (
       <g ref={ref} key={body.id}>
@@ -77,6 +71,8 @@ type Props = {
   vertexSets: any;
   options: object;
   flagInternal: boolean;
-  cloneID?: number;
+  cloneID?: string;
   cloneProps: object;
 } & React.ComponentProps<typeof Body>;
+
+const px = (n: number) => `${n}px`;

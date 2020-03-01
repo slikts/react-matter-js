@@ -5,6 +5,7 @@ import Walls from './Walls';
 import Engine from '../Engine';
 import RenderClones from './RenderClones';
 import { valueMemo, relX, relY } from '../util';
+import { Sprites, loadSprites } from '../util/SpriteMap';
 
 const Scene = ({
   width = 720,
@@ -16,6 +17,7 @@ const Scene = ({
   gravity,
   walled = false,
   wallWidth = 50,
+  sprites = [],
   children,
 }: Props) => {
   const rendererOptions = {
@@ -27,6 +29,7 @@ const Scene = ({
     ...rendererProps.options,
   };
   const key = `${rendererOptions.width}-${rendererOptions.height}`;
+  loadSprites(sprites);
 
   const wall = walled ? (
     <Walls
@@ -81,5 +84,6 @@ type Props = {
   gravity?: Gravity;
   walled?: boolean;
   wallWidth?: number;
+  sprites?: Sprites;
   children: React.ReactNode;
 };

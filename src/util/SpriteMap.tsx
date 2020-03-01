@@ -1,17 +1,19 @@
-import React, { ReactNode, createContext, useContext } from 'react';
-import { cESVG, randomSuffix } from './common';
+import { createContext, useContext } from 'react';
+import { cESVG, getRandomId } from './common';
 
-class SpriteMap extends Map<string, SVGPathElement> {
+class SpriteMap extends Map<SVGPathElement, string> {
   constructor(
     sprites: Sprites = [],
     private container: any,
-    private options: Options,
+    private options: SpriteOptions = {},
   ) {
     super(sprites);
   }
 
-  set(key: string, shape: SVGPathElement) {
-    const id = `${key}-${randomSuffix}`;
+  set(shape: SVGPathElement, id: string = getRandomId()) {
+    if (this.has(shape)) {
+      return this;
+    }
     const symbol = cESVG('symbol');
     symbol.setAttribute('id', id);
     symbol.appendChild(shape);
@@ -27,42 +29,39 @@ class SpriteMap extends Map<string, SVGPathElement> {
     `;
     symbol.setAttribute('viewBox', viewBox);
 
-    return super.set(key, shape);
+    return super.set(shape, id);
   }
 
-  delete(key: string) {
-    const id = this.get(key);
+  delete(shape: SVGPathElement) {
+    const id = this.get(shape);
     document.querySelector(`#${id}`)?.remove();
 
-    return super.delete(key);
+    return super.delete(shape);
   }
 }
 
 export default SpriteMap;
 
-type Options = {
+export type SpriteOptions = {
   margin?: number;
 };
-type Sprites = [string, SVGPathElement][];
+export type Sprites = [SVGPathElement, string][];
 
-export const createSpriteMap = (sprites: Sprites, { margin }: Options) => {
-  const container = cESVG('svg');
-  container.style.visibility = 'hidden';
-  container.style.position = 'absolute';
-  document.body.appendChild(container);
+const container = cESVG('svg');
+container.style.visibility = 'hidden';
+container.style.position = 'absolute';
+document.body.appendChild(container);
 
-  const spriteMap = new SpriteMap(sprites, container, { margin });
-  const SpriteProvider = ({ children }: { children: ReactNode }) => (
-    <Provider value={spriteMap}>{children}</Provider>
-  );
+const spriteMap = new SpriteMap([], container);
 
-  return { spriteMap, SpriteProvider };
+export const loadSprites = (sprites: Sprites) => {
+  sprites.forEach(([key, path]) => void spriteMap.set(key, path));
 };
 
-export const SpriteContext = createContext<SpriteMap>(null as any);
-const { Provider } = SpriteContext;
+export const SpriteContext = createContext<SpriteMap>(spriteMap);
+
 export const useSprites = () => useContext(SpriteContext);
-export const useSprite = (key: string) =>
+export const useSprite = (shape: SVGPathElement) =>
   useSprites()
-    .get(key)
-    ?.getAttribute('id');
+    .set(shape)
+    .get(shape);
