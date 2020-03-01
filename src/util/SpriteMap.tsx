@@ -1,8 +1,13 @@
-import { cESVG, randomSuffix } from '.';
+import React, { ReactNode, createContext, useContext } from 'react';
+import { cESVG, randomSuffix } from './common';
 
-class SpriteMap extends Map<string, any> {
-  constructor(private margin = 0) {
-    super();
+class SpriteMap extends Map<string, SVGPathElement> {
+  constructor(
+    sprites: Sprites = [],
+    private container: any,
+    private options: Options,
+  ) {
+    super(sprites);
   }
 
   set(key: string, shape: SVGPathElement) {
@@ -10,9 +15,10 @@ class SpriteMap extends Map<string, any> {
     const symbol = cESVG('symbol');
     symbol.setAttribute('id', id);
     symbol.appendChild(shape);
+    const { container } = this;
     container.appendChild(symbol);
     const bBox = shape.getBBox();
-    const { margin } = this;
+    const { margin = 0 } = this.options;
     const viewBox = `
       ${bBox.x - margin}
       ${bBox.y - margin}
@@ -21,7 +27,7 @@ class SpriteMap extends Map<string, any> {
     `;
     symbol.setAttribute('viewBox', viewBox);
 
-    return super.set(key, id);
+    return super.set(key, shape);
   }
 
   delete(key: string) {
@@ -34,7 +40,29 @@ class SpriteMap extends Map<string, any> {
 
 export default SpriteMap;
 
-const container = cESVG('svg');
-container.style.visibility = 'hidden';
-container.style.position = 'absolute';
-document.appendChild(container);
+type Options = {
+  margin?: number;
+};
+type Sprites = [string, SVGPathElement][];
+
+export const createSpriteMap = (sprites: Sprites, { margin }: Options) => {
+  const container = cESVG('svg');
+  container.style.visibility = 'hidden';
+  container.style.position = 'absolute';
+  document.body.appendChild(container);
+
+  const spriteMap = new SpriteMap(sprites, container, { margin });
+  const SpriteProvider = ({ children }: { children: ReactNode }) => (
+    <Provider value={spriteMap}>{children}</Provider>
+  );
+
+  return { spriteMap, SpriteProvider };
+};
+
+export const SpriteContext = createContext<SpriteMap>(null as any);
+const { Provider } = SpriteContext;
+export const useSprites = () => useContext(SpriteContext);
+export const useSprite = (key: string) =>
+  useSprites()
+    .get(key)
+    ?.getAttribute('id');
