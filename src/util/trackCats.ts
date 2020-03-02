@@ -10,7 +10,7 @@ const trackCats = (engine: Matter.Engine) => {
   engine[catsKey] = cats;
 
   const afterAdd = ({ object: body }: { object: Matter.Body }) => {
-    if (!body[catsKey]?.length) {
+    if (!body[catsKey]?.size) {
       return;
     }
     body[catsKey].forEach((key: CatKey) => void cats.get(key).add(body));
@@ -63,6 +63,6 @@ declare module 'matter-js' {
   }
 
   interface Body {
-    [catsKey]: CatKey[];
+    [catsKey]: Set<CatKey>;
   }
 }

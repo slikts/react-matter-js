@@ -13,6 +13,7 @@ const Body = ({
   sizes = {},
 }: Props) => {
   const engine = useEngine();
+
   useEffect(() => {
     const body = shallow(createBody());
     body[sizesKey] = sizes;
@@ -21,10 +22,11 @@ const Body = ({
       bodyRef.current = body;
     }
 
-    body[catsKey] = cats;
+    body[catsKey] = Array.isArray(cats) ? new Set(cats) : cats;
 
     if (body[cloneKey]) {
-      body[catsKey].push(body[cloneKey]!.key, cloneKey);
+      body[catsKey].add(body[cloneKey]!.key);
+      body[catsKey].add(cloneKey);
     }
 
     Matter.World.add(engine.world, body);
@@ -36,6 +38,7 @@ const Body = ({
         bodyRef.current = undefined;
       }
     };
+    // TODO: value effect
   }, [engine, createBody, cats, bodyRef, sizes]);
 
   return null;
