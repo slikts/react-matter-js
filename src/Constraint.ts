@@ -1,4 +1,4 @@
-import { useEffect, cloneElement, memo } from 'react';
+import { cloneElement, memo } from 'react';
 import Matter from 'matter-js';
 
 import { useEngine } from './Engine';
