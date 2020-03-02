@@ -1,15 +1,17 @@
 import { useEffect, DependencyList } from 'react';
 import Matter from 'matter-js';
 import { useEngine } from '../Engine';
+import { useValueEffect } from '../util';
 
 const useEvent = (
   eventName: string,
   handler: (e: any) => void,
   deps: DependencyList,
+  valueEffect: boolean = false,
 ) => {
   const { world } = useEngine();
 
-  useEffect(() => {
+  (valueEffect ? useValueEffect : useEffect)(() => {
     Matter.Events.on(world, eventName, handler);
 
     return () => void Matter.Events.off(world, eventName, handler);
@@ -24,6 +26,7 @@ export const useIntervalEvent = (
   handler: (e: any) => void,
   interval: number,
   deps: DependencyList,
+  valueEffect: boolean = false,
 ) => {
   let count = 0;
 
@@ -37,5 +40,6 @@ export const useIntervalEvent = (
       count += 1;
     },
     deps,
+    valueEffect,
   );
 };

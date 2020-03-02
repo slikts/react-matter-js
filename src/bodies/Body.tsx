@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
 import Matter from 'matter-js';
 import { shallow } from 'tuplerone';
 import { useEngine } from '../Engine';
 import { catsKey, CatKey } from '../util/trackCats';
 import { cloneKey } from '../util/useClones';
-import { valueMemo, Sizes } from '../util';
+import { valueMemo, Sizes, useValueEffect } from '../util';
 
 const Body = ({
   children: createBody,
@@ -14,7 +13,7 @@ const Body = ({
 }: Props) => {
   const engine = useEngine();
 
-  useEffect(() => {
+  useValueEffect(() => {
     const body = shallow(createBody());
     body[sizesKey] = sizes;
 
@@ -38,7 +37,6 @@ const Body = ({
         bodyRef.current = undefined;
       }
     };
-    // TODO: value effect
   }, [engine, createBody, cats, bodyRef, sizes]);
 
   return null;

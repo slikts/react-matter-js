@@ -2,7 +2,7 @@ import { useEffect, cloneElement, memo } from 'react';
 import Matter from 'matter-js';
 
 import { useEngine } from './Engine';
-import { valueCompare, useForwardRef } from './util';
+import { valueCompare, useForwardRef, useValueEffect } from './util';
 import { BodyRef } from './bodies/Body';
 
 // TODO: return type
@@ -13,7 +13,7 @@ const Constraint = ({ children, length, ...options }: Props): any => {
   const bodyRefA = useForwardRef(childA.props.bodyRef);
   const bodyRefB = useForwardRef(childB.props.bodyRef);
 
-  useEffect(() => {
+  useValueEffect(() => {
     const { current: bodyA } = bodyRefA;
     const { current: bodyB } = bodyRefB;
 
@@ -28,7 +28,6 @@ const Constraint = ({ children, length, ...options }: Props): any => {
     return () => {
       Matter.World.remove(engine.world, constraint);
     };
-    // TODO: value options
   }, [options, engine, length, bodyRefA, bodyRefB]);
 
   return [bodyRefA, bodyRefB].map((bodyRef, key) =>

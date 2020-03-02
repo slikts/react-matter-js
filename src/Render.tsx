@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Matter from 'matter-js';
 import { shallow } from 'tuplerone';
 
 import { useEngine } from './Engine';
-import { valueMemo } from './util';
+import { valueMemo, useValueEffect } from './util';
 import { css } from 'emotion';
 
 const Render = ({
@@ -18,7 +18,7 @@ const Render = ({
   const [render, setRender] = useState<Matter.Render | null>(null);
   const { width } = options;
 
-  useEffect(() => {
+  useValueEffect(() => {
     const render = shallow(
       Matter.Render.create({
         element: elementRef.current!,
