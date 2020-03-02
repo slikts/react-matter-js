@@ -1,6 +1,5 @@
 import { useEffect, cloneElement, memo } from 'react';
 import Matter from 'matter-js';
-import { shallow } from 'tuplerone';
 
 import { useEngine } from './Engine';
 import { valueCompare, useForwardRef } from './util';
@@ -18,19 +17,18 @@ const Constraint = ({ children, length, ...options }: Props): any => {
     const { current: bodyA } = bodyRefA;
     const { current: bodyB } = bodyRefB;
 
-    const constraint = shallow(
-      Matter.Constraint.create({
-        bodyA: bodyA!,
-        bodyB: bodyB!,
-        length,
-        ...options,
-      }),
-    );
+    const constraint = Matter.Constraint.create({
+      bodyA: bodyA!,
+      bodyB: bodyB!,
+      length,
+      ...options,
+    });
     Matter.World.add(engine.world, constraint);
 
     return () => {
       Matter.World.remove(engine.world, constraint);
     };
+    // TODO: value options
   }, [options, engine, length, bodyRefA, bodyRefB]);
 
   return [bodyRefA, bodyRefB].map((bodyRef, key) =>
