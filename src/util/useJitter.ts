@@ -5,7 +5,7 @@ import { CatKey, useCat } from './trackCats';
 
 const useJitter = (
   catKey: CatKey,
-  { drift = 0.001, angleJitter = 0.1, uprightBias = 0.01 } = {},
+  { driftX = 1e-6, driftY = 1e-6, angleJitter = 0.1, uprightBias = 0.01 } = {},
 ) => {
   const engine = useEngine();
   const cat = useCat(catKey);
@@ -13,8 +13,8 @@ const useJitter = (
   useEffect(() => {
     const afterUpdate = () => {
       cat.forEach(body => {
-        const x = randomSign() * drift;
-        const y = randomSign() * drift;
+        const x = randomSign() * driftX * engine.render.canvas.width;
+        const y = randomSign() * driftY * engine.render.canvas.height;
 
         Body.applyForce(body, body.position, {
           x,
@@ -30,7 +30,7 @@ const useJitter = (
     Matter.Events.on(engine, 'afterUpdate', afterUpdate);
 
     return () => void Matter.Events.off(engine, 'afterUpdate', afterUpdate);
-  }, [cat, engine, angleJitter, drift, uprightBias]);
+  }, [cat, engine, angleJitter, driftX, driftY, uprightBias]);
 };
 
 export default useJitter;
