@@ -1,13 +1,20 @@
 import React, { cloneElement } from 'react';
 import { Body } from 'matter-js';
 import { Circle } from '..';
-import { valueMemo, useForwardRef, useAttraction } from '../util';
+import { valueMemo, useForwardRef } from '../util';
+import useAttraction, { AttrOptions } from '../util/useAttraction';
 
-const Position = ({ children, bodyRef, options, ...props }: Props) => {
+const Position = ({
+  children,
+  bodyRef,
+  attrOptions,
+  options,
+  ...props
+}: Props) => {
   const attracteeRef = useForwardRef<Body>(children.props.bodyRef);
   const attractorRef = useForwardRef(bodyRef);
 
-  useAttraction(attractorRef, attracteeRef);
+  useAttraction(attractorRef, attracteeRef, attrOptions);
 
   return (
     <>
@@ -25,6 +32,7 @@ const Position = ({ children, bodyRef, options, ...props }: Props) => {
 
 type Props = {
   children: React.ReactElement;
+  attrOptions: AttrOptions;
 } & React.ComponentProps<typeof Circle>;
 
 export default valueMemo(Position);

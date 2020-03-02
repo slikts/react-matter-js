@@ -5,44 +5,50 @@ import { useEngine } from '..';
 const useAttraction = (
   attractorRef: BodyRef,
   attracteeRef: BodyRef,
-  { innerFriction = 1, gravityConstant = 0.001, boost = 1.5 } = {},
+  { innerFriction = 1, gravityConstant = 0.001, boost = 1 }: AttrOptions = {},
 ) => {
   const engine = useEngine();
+  const {
+    render: { canvas },
+  } = engine;
 
   useEffect(() => {
     let inside = false;
 
     const afterUpdate = () => {
-      const { current: targetBody } = attracteeRef;
-      const { current: sourceBody } = attractorRef;
-      if (!targetBody || !sourceBody) {
+      // Relativize attraction by the diagonal of the scene
+      const diagonal = Math.sqrt(canvas.width ** 2 + canvas.height ** 2) * 1e-3;
+      const { current: attractee } = attracteeRef;
+      const { current: attractor } = attractorRef;
+      if (!attractee || !attractor) {
         return;
       }
-      const bToA = Vector.sub(sourceBody.position, targetBody.position);
+      const bToA = Vector.sub(attractor.position, attractee.position);
       const distance = Vector.magnitude(bToA) || 0.0001;
       const normal = Vector.normalise(bToA);
       const magnitude =
-        -gravityConstant * (targetBody.mass * 1e-4 * distance ** 2) * boost;
+        -gravityConstant *
+        (attractee.mass * 1e-4 * distance ** 2) *
+        boost *
+        diagonal;
       const force = Vector.mult(normal, magnitude);
 
-      Body.applyForce(
-        targetBody,
-        targetBody.position,
-        Matter.Vector.neg(force),
-      );
-      if (distance < sourceBody.circleRadius!) {
+      Body.applyForce(attractee, attractee.position, Matter.Vector.neg(force));
+      // Dampen turn by distance to attractor
+      const damp = 1 - Math.min(distance / attractor.circleRadius! / 2, 1);
+      if (damp > 0.1) {
         if (!inside) {
-          targetBody.frictionAir = targetBody.frictionAir / innerFriction;
+          attractee.frictionAir = attractee.frictionAir / innerFriction;
           inside = true;
         }
-        const dir = (targetBody.angle % (PI * 2)) / (PI * 2) - 0.5;
+        const dir = (attractee.angle % (PI * 2)) / (PI * 2) - 0.5;
         const turn = ((1 - Math.abs(dir)) / 0.5 - 1) * Math.sign(dir);
         const turnSpeed = 0.05 * turn;
         if (Math.abs(turnSpeed) > 1e-4) {
-          Body.setAngularVelocity(targetBody, turnSpeed);
+          Body.setAngularVelocity(attractee, turnSpeed * damp);
         }
       } else if (inside) {
-        targetBody.frictionAir = targetBody.frictionAir * innerFriction;
+        attractee.frictionAir = attractee.frictionAir * innerFriction;
         inside = false;
       }
     };
@@ -52,6 +58,7 @@ const useAttraction = (
     return () => void Matter.Events.off(engine, 'afterUpdate', afterUpdate);
   }, [
     engine,
+    canvas,
     attracteeRef,
     attractorRef,
     boost,
@@ -63,5 +70,10 @@ const useAttraction = (
 export default useAttraction;
 
 type BodyRef = MutableRefObject<Body | undefined>;
+export type AttrOptions = {
+  innerFriction?: number;
+  boost?: number;
+  gravityConstant?: number;
+};
 
 const { PI } = Math;
