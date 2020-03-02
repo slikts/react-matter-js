@@ -1,4 +1,4 @@
-import React, { cloneElement, useRef } from 'react';
+import React, { cloneElement } from 'react';
 import { Body } from 'matter-js';
 import { Circle } from '..';
 import { valueMemo, useForwardRef, useAttraction } from '../util';
@@ -28,17 +28,3 @@ type Props = {
 } & React.ComponentProps<typeof Circle>;
 
 export default valueMemo(Position);
-
-/*
-      Object.values(letters).forEach(({ body }) => {
-        const d = 0.001;
-        const x = randomSign() * d;
-        const y = randomSign() * d;
-
-        Body.applyForce(body, body.position, {
-          x,
-          y,
-        });
-        body.torque = randomSign() * 0.1;
-      });
-      */
