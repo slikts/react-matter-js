@@ -1,6 +1,6 @@
 import { useEffect, MutableRefObject } from 'react';
 import Matter, { Vector, Body } from 'matter-js';
-import { useEngine } from '..';
+import { useEngine } from './engineContext';
 
 const useAttraction = (
   attractorRef: BodyRef,

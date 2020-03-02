@@ -1,6 +1,6 @@
 import React, { cloneElement } from 'react';
 import { Body } from 'matter-js';
-import { Circle } from '..';
+import Circle from '../bodies/Circle';
 import { valueMemo, useForwardRef } from '../util';
 import useAttraction, { AttrOptions } from '../util/useAttraction';
 

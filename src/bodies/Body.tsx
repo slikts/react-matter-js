@@ -1,9 +1,8 @@
 import Matter from 'matter-js';
 import { shallow } from 'tuplerone';
-import { useEngine } from '../Engine';
 import { catsKey, CatKey } from '../util/trackCats';
 import { cloneKey } from '../util/useClones';
-import { valueMemo, Sizes, useValueEffect } from '../util';
+import { valueMemo, Sizes, useValueEffect, useEngine } from '../util';
 
 const Body = ({
   children: createBody,

@@ -1,9 +1,8 @@
 import Matter from 'matter-js';
 import { useEffect } from 'react';
-import { useEngine } from '../Engine';
 import DefaultMap from './DefaultMap';
 import TrackSet, { ItemSub } from './TrackSet';
-import { useRerender } from '../util';
+import { useRerender, useEngine } from '../util';
 
 const trackCats = (engine: Matter.Engine) => {
   const cats: CatMap = new DefaultMap(() => new TrackSet());

@@ -1,4 +1,4 @@
-export { default as Engine, useEngine } from './Engine';
+export { default as Engine } from './Engine';
 export { default as Render } from './Render';
 export { default as RenderClones } from './extra/RenderClones';
 export { default as Body } from './bodies/Body';
@@ -13,4 +13,4 @@ export { default as Shape } from './extra/Shape';
 export { default as Walls } from './extra/Walls';
 export { default as Position } from './extra/Position';
 // Utils
-export { relX, relY } from './util';
+export { relX, relY, useEngine } from './util';

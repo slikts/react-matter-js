@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Matter, { Body } from 'matter-js';
-import { useEngine } from '..';
+import { useEngine } from './engineContext';
 import { CatKey, useCat } from './trackCats';
 
 const useJitter = (

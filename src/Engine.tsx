@@ -1,8 +1,8 @@
-import React, { useState, createContext, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Matter from 'matter-js';
 import { shallow } from 'tuplerone';
 
-import { valueMemo } from './util';
+import { valueMemo, EngineContext } from './util';
 import trackCats from './util/trackCats';
 
 const Engine = ({ options, children }: Props) => {
@@ -32,8 +32,6 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const EngineContext = createContext<Matter.Engine>(null as any);
-const { Provider } = EngineContext;
-export const useEngine = () => useContext(EngineContext);
-
 export const cloneKey = Symbol('clone');
+
+const { Provider } = EngineContext;

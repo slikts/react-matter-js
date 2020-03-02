@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Common } from 'matter-js';
-import { useEngine } from '../Engine';
+import { useEngine } from './engineContext';
 
 const useTiltGravity = () => {
   const engine = useEngine();

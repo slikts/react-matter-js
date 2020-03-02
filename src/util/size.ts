@@ -1,5 +1,5 @@
 import { Engine } from 'matter-js';
-import { useEngine } from '../Engine';
+import { useEngine } from '../util/engineContext';
 
 export const relX = (size: number) => (engine: Engine) =>
   engine.render.options.width! * size;

@@ -1,7 +1,7 @@
 import { cloneElement, memo } from 'react';
 import Matter from 'matter-js';
 
-import { useEngine } from './Engine';
+import { useEngine } from './util/engineContext';
 import { valueCompare, useForwardRef, useValueEffect } from './util';
 import { BodyRef } from './bodies/Body';
 

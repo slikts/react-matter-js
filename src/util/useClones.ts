@@ -1,6 +1,6 @@
 import Matter from 'matter-js';
 import React, { useEffect } from 'react';
-import { useEngine } from '../Engine';
+import { useEngine } from '../util';
 import { useCat, Cat } from './trackCats';
 
 const useClones = () => {

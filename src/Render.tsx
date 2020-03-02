@@ -2,8 +2,7 @@ import React, { useRef, useState } from 'react';
 import Matter from 'matter-js';
 import { shallow } from 'tuplerone';
 
-import { useEngine } from './Engine';
-import { valueMemo, useValueEffect } from './util';
+import { valueMemo, useValueEffect, useEngine } from './util';
 import { css } from 'emotion';
 
 const Render = ({

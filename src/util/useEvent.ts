@@ -1,6 +1,6 @@
 import { useEffect, DependencyList } from 'react';
 import Matter from 'matter-js';
-import { useEngine } from '../Engine';
+import { useEngine } from '../util/engineContext';
 import { useValueEffect } from '../util';
 
 const useEvent = (
