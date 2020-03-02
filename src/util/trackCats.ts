@@ -2,7 +2,7 @@ import Matter from 'matter-js';
 import { useEffect } from 'react';
 import { useEngine } from '../Engine';
 import DefaultMap from './DefaultMap';
-import TrackSet from './TrackSet';
+import TrackSet, { ItemSub } from './TrackSet';
 import { useRerender } from '../util';
 
 const trackCats = (engine: Matter.Engine) => {
@@ -66,3 +66,13 @@ declare module 'matter-js' {
     [catsKey]: Set<CatKey>;
   }
 }
+
+export const useTrackCatItems = (key: CatKey, effect: ItemSub<any>) => {
+  const cat = useCat(key);
+
+  useEffect(() => {
+    cat.trackItems(effect);
+
+    return () => void cat.untrackItems(effect);
+  });
+};

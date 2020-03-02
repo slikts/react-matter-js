@@ -1,11 +1,15 @@
 export default class TrackSet<A> extends Set<A> {
-  constructor(private subs = new Set<Sub<A>>()) {
+  constructor(
+    private subs = new Set<Sub<A>>(),
+    // TODO: add cleanup (?)
+    private itemSubs = new Set<ItemSub<A>>(),
+  ) {
     super();
   }
   add(a: A) {
     super.add(a);
-
     this.subs.forEach(sub => sub(this));
+    this.itemSubs.forEach(itemSub => itemSub(a));
     return this;
   }
   delete(a: A) {
@@ -21,6 +25,12 @@ export default class TrackSet<A> extends Set<A> {
   untrack(sub: Sub<A>) {
     this.subs.delete(sub);
   }
+  trackItems(itemSub: ItemSub<A>) {
+    this.itemSubs.add(itemSub);
+  }
+  untrackItems(itemSub: ItemSub<A>) {
+    this.itemSubs.delete(itemSub);
+  }
   clear() {
     super.clear();
     this.subs.forEach(sub => sub(this));
@@ -28,4 +38,5 @@ export default class TrackSet<A> extends Set<A> {
   }
 }
 
-type Sub<A> = (a: TrackSet<A>) => void;
+export type Sub<A> = (a: TrackSet<A>) => void;
+export type ItemSub<A> = (a: A) => void;
