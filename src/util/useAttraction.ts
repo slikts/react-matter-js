@@ -51,7 +51,14 @@ const useAttraction = (
     Matter.Events.on(engine, 'afterUpdate', afterUpdate);
 
     return () => void Matter.Events.off(engine, 'afterUpdate', afterUpdate);
-  });
+  }, [
+    engine,
+    attracteeRef,
+    attractorRef,
+    boost,
+    gravityConstant,
+    innerFriction,
+  ]);
 };
 
 export default useAttraction;
