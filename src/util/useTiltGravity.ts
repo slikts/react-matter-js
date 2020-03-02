@@ -24,7 +24,6 @@ const useTiltGravity = () => {
         gravity.x = Common.clamp(-event.beta!, -90, 90) / 90;
         gravity.y = Common.clamp(event.gamma, -90, 90) / 90;
       }
-      window.location.hash = `${gravity.x}-${gravity.y}`;
     };
 
     window.addEventListener('deviceorientation', updateGravity);
