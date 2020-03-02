@@ -35,7 +35,6 @@ const useAttraction = (
           targetBody.frictionAir = targetBody.frictionAir / innerFriction;
           inside = true;
         }
-        const { PI } = Math;
         const dir = (targetBody.angle % (PI * 2)) / (PI * 2) - 0.5;
         const turn = ((1 - Math.abs(dir)) / 0.5 - 1) * Math.sign(dir);
         const turnSpeed = 0.05 * turn;
@@ -64,3 +63,5 @@ const useAttraction = (
 export default useAttraction;
 
 type BodyRef = MutableRefObject<Body | undefined>;
+
+const { PI } = Math;
