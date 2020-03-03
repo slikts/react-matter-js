@@ -23,5 +23,6 @@ export const mapEntries = <A, B>(
 
 export const useMapSizes = (sizes: Sizes) => {
   const engine = useEngine();
+
   return mapEntries(sizes, ([key, value]) => [key, getSize(value, engine)]);
 };

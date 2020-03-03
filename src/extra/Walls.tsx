@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 
 import Rectangle from '../bodies/Rectangle';
-import { Size, useMapSizes } from '../util';
+import { Size, useMapSizes } from '../util/size';
 
 const Walls = ({ options, ...props }: Props) => {
   const defaultProps = {
