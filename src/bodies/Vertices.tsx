@@ -1,8 +1,9 @@
 import React, { createRef } from 'react';
 import Matter from 'matter-js';
+import { shallow } from 'tuplerone';
 import Body from './Body';
 import { cloneKey, svgKey } from '../util/useClones';
-import { valueMemo } from '../util';
+import { valueMemo, useForwardRef, useValueEffect, useRerender } from '../util';
 
 const Vertices = ({
   x,
@@ -14,18 +15,18 @@ const Vertices = ({
   flagInternal = false,
   cloneID,
   cloneProps = {},
+  bodyRef,
   ...props
 }: Props) => {
-  const createBody = () => {
-    const body = Matter.Bodies.fromVertices(
-      x,
-      y,
-      vertexSets,
-      options,
-      flagInternal,
-    );
+  const ref = shallow(useForwardRef(bodyRef));
+  const rerender = useRerender();
 
-    const ref = createRef<SVGGElement>();
+  useValueEffect(() => {
+    const body = shallow(
+      Matter.Bodies.fromVertices(x, y, vertexSets, options, flagInternal),
+    );
+    ref.current = body;
+
     const { min, max } = body.bounds;
     const boundWidth = max.x - min.x;
     const boundHeight = max.y - min.y;
@@ -33,7 +34,8 @@ const Vertices = ({
     Matter.Body.scale(body, scale, scale);
 
     if (cloneID) {
-      // TODO: use actual pixel ratio
+      const ref = createRef<SVGGElement>();
+      // TODO: use actual pixel ratio (?)
       const ratio = 1;
       const scaledWidth = boundWidth * scale * ratio;
       const scaledHeight = boundHeight * scale * ratio;
@@ -56,11 +58,10 @@ const Vertices = ({
         el,
       };
     }
+    rerender();
+  }, [options]);
 
-    return body;
-  };
-
-  return <Body {...props}>{createBody}</Body>;
+  return ref.current ? <Body {...props} bodyRef={ref} /> : null;
 };
 
 export default valueMemo(Vertices);

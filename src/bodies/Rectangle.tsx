@@ -1,8 +1,15 @@
 import React, { createRef } from 'react';
 import Matter from 'matter-js';
+import { shallow } from 'tuplerone';
 import Body from './Body';
 import { cloneKey, svgKey } from '../util/useClones';
-import { valueMemo } from '../util';
+import {
+  valueMemo,
+  useValueEffect,
+  useForwardRef,
+  useRerender,
+  useMapSizes,
+} from '../util';
 
 const Rectangle = ({
   x,
@@ -11,21 +18,28 @@ const Rectangle = ({
   height,
   clone = false,
   options,
+  bodyRef,
   ...props
 }: Props) => {
-  const createBody = () => {
-    const body = Matter.Bodies.rectangle(x, y, width, height, options);
+  const rerender = useRerender();
+  const ref = useForwardRef(bodyRef);
+  const sizes = useMapSizes({
+    x,
+    y,
+    width,
+    height,
+  });
+
+  useValueEffect(() => {
+    const { x, y, width, height } = sizes;
+    const body = shallow(Matter.Bodies.rectangle(x, y, width, height, options));
+    ref.current = body;
     if (clone) {
       const ref = createRef<SVGRectElement>();
       const el = (
-        <rect
-          x={-width / 2}
-          y={-height / 2}
-          width={width}
-          height={height}
-          ref={ref}
-          key={body.id}
-        />
+        <g ref={ref} key={body.id}>
+          <rect x={-width / 2} y={-height / 2} width={width} height={height} />
+        </g>
       );
       body[cloneKey] = {
         key: svgKey,
@@ -33,11 +47,12 @@ const Rectangle = ({
         el,
       };
     }
+    rerender();
+  }, [options]);
 
-    return body;
-  };
-
-  return <Body {...props}>{createBody}</Body>;
+  return ref.current ? (
+    <Body {...props} bodyRef={ref} key={ref.current.id} />
+  ) : null;
 };
 
 export default valueMemo(Rectangle);
@@ -49,4 +64,4 @@ type Props = {
   height: number;
   clone?: boolean;
   options?: Matter.IChamferableBodyDefinition;
-} & Omit<React.ComponentProps<typeof Body>, 'children'>;
+} & React.ComponentProps<typeof Body>;

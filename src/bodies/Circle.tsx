@@ -1,8 +1,16 @@
 import React, { createRef } from 'react';
 import Matter from 'matter-js';
+import { shallow } from 'tuplerone';
 import Body from './Body';
 import { cloneKey, svgKey } from '../util/useClones';
-import { valueMemo, Size, useMapSizes } from '../util';
+import {
+  valueMemo,
+  useValueEffect,
+  useForwardRef,
+  useRerender,
+  useMapSizes,
+  Size,
+} from '../util';
 
 const Circle = ({
   x,
@@ -11,6 +19,7 @@ const Circle = ({
   clone = false,
   options,
   cloneProps,
+  bodyRef,
   ...props
 }: Props) => {
   const sizes = useMapSizes({
@@ -18,20 +27,20 @@ const Circle = ({
     y,
     radius,
   });
-  const createBody = () => {
-    const body = Matter.Bodies.circle(sizes.x, sizes.y, sizes.radius, options);
+  const rerender = useRerender();
+  const ref = useForwardRef(bodyRef);
 
+  useValueEffect(() => {
+    const body = shallow(
+      Matter.Bodies.circle(sizes.x, sizes.y, sizes.radius, options),
+    );
+    ref.current = body;
     if (clone) {
       const ref = createRef<SVGCircleElement>();
       const el = (
-        <circle
-          cx={0}
-          cy={0}
-          r={sizes.radius}
-          ref={ref}
-          key={body.id}
-          {...cloneProps}
-        />
+        <g ref={ref} key={body.id} {...cloneProps}>
+          <circle cx={0} cy={0} r={sizes.radius} />
+        </g>
       );
       body[cloneKey] = {
         key: svgKey,
@@ -39,11 +48,12 @@ const Circle = ({
         el,
       };
     }
+    rerender();
+  }, [options]);
 
-    return body;
-  };
-
-  return <Body {...props}>{createBody}</Body>;
+  return ref.current ? (
+    <Body {...props} bodyRef={ref} key={ref.current.id} />
+  ) : null;
 };
 
 export default valueMemo(Circle);

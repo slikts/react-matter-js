@@ -1,19 +1,11 @@
 import Matter from 'matter-js';
-import { shallow } from 'tuplerone';
 import { catsKey, CatKey } from '../util/trackCats';
 import { cloneKey } from '../util/useClones';
-import {
-  valueMemo,
-  Sizes,
-  useValueEffect,
-  useEngine,
-  useForwardRef,
-} from '../util';
+import { valueMemo, Sizes, useValueEffect, useEngine } from '../util';
 import { eventsKey } from '../util/trackEvents';
 import { mouseConstraintKey } from '../Render';
 
 const Body = ({
-  children: createBody,
   cats = [],
   bodyRef,
   onCollisionStart,
@@ -27,13 +19,10 @@ const Body = ({
 }: Props) => {
   const engine = useEngine();
   const events = engine[eventsKey];
-  const ref = useForwardRef(bodyRef);
+  const body = bodyRef!.current!;
 
   useValueEffect(() => {
-    const body = shallow(createBody());
     const mouseConstraint = engine.render[mouseConstraintKey];
-
-    ref.current = body;
 
     body[catsKey] = Array.isArray(cats) ? new Set(cats) : cats;
 
@@ -69,13 +58,13 @@ const Body = ({
 
       Matter.World.remove(engine.world, body);
 
-      ref.current = undefined;
+      bodyRef!.current = undefined;
     };
   }, [
     engine,
-    createBody,
     cats,
-    ref,
+    bodyRef,
+    // TODO: deps
     onCollisionStart,
     onCollisionActive,
     onCollisionEnd,
@@ -87,7 +76,6 @@ const Body = ({
 export default valueMemo(Body);
 
 type Props = {
-  children: () => Matter.Body;
   cats?: CatKey[];
   bodyRef?: BodyRef;
   sizes?: Sizes;

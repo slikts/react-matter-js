@@ -15,7 +15,8 @@ const trackEvents = (engine: Matter.Engine) => {
   engine[eventsKey] = events;
 
   return () => {
-    // TODO: cleanup events
+    // TODO: clean up events
+    // Object.entries(events).forEach(map => {});
   };
 };
 
@@ -25,7 +26,7 @@ export const eventsKey = Symbol('events');
 
 declare module 'matter-js' {
   interface Engine {
-    // TODO:
+    // TODO: type
     [eventsKey]: any;
   }
 }
