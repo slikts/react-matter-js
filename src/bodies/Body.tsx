@@ -52,7 +52,15 @@ const Body = ({
 
       ref.current = undefined;
     };
-  }, [engine, createBody, cats, ref]);
+  }, [
+    engine,
+    createBody,
+    cats,
+    ref,
+    onCollisionStart,
+    onCollisionActive,
+    onCollisionEnd,
+  ]);
 
   return null;
 };
