@@ -16,7 +16,7 @@ const Body = ({
   onMouseDown,
   onMouseMove,
   onMouseUp,
-}: Props) => {
+}: Omit<Props, 'cloneProps'>) => {
   const engine = useEngine();
   const events = engine[eventsKey];
   const body = bodyRef!.current!;
@@ -79,6 +79,7 @@ type Props = {
   cats?: CatKey[];
   bodyRef?: BodyRef;
   sizes?: Sizes;
+  cloneProps?: object;
   onCollisionStart?: CollisionHandler;
   onCollisionActive?: CollisionHandler;
   onCollisionEnd?: CollisionHandler;

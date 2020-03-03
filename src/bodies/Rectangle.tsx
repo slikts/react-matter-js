@@ -19,6 +19,7 @@ const Rectangle = ({
   clone = false,
   options,
   bodyRef,
+  cloneProps,
   ...props
 }: Props) => {
   const rerender = useRerender();
@@ -37,7 +38,7 @@ const Rectangle = ({
     if (clone) {
       const ref = createRef<SVGRectElement>();
       const el = (
-        <g ref={ref} key={body.id}>
+        <g {...cloneProps} ref={ref} key={body.id}>
           <rect x={-width / 2} y={-height / 2} width={width} height={height} />
         </g>
       );
@@ -68,4 +69,5 @@ type Props = {
   height: number;
   clone?: boolean;
   options?: Matter.IChamferableBodyDefinition;
+  cloneProps?: React.SVGProps<SVGGElement>;
 } & React.ComponentProps<typeof Body>;

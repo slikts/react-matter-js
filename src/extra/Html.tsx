@@ -1,54 +1,53 @@
 import React, { createRef, useEffect } from 'react';
 import Matter from 'matter-js';
 import { shallow } from 'tuplerone';
-import Body from './Body';
-import { cloneKey, svgKey } from '../util/useClones';
+import Body from '../bodies/Body';
+import Rectangle from '../bodies/Rectangle';
+import { cloneKey, domKey } from '../util/useClones';
 import {
   valueMemo,
   useValueEffect,
   useForwardRef,
   useRerender,
   useMapSizes,
-  Size,
 } from '../util';
 
-const Circle = ({
+const Html = ({
   x,
   y,
-  radius,
   clone = false,
   options,
-  cloneProps,
   bodyRef,
+  children,
+  cloneProps,
   ...props
 }: Props) => {
+  const rerender = useRerender();
+  const ref = useForwardRef(bodyRef);
   const sizes = useMapSizes({
     x,
     y,
-    radius,
+    width: 100,
+    height: 100,
   });
-  const rerender = useRerender();
-  const ref = useForwardRef(bodyRef);
 
   useValueEffect(() => {
-    const body = shallow(
-      Matter.Bodies.circle(sizes.x, sizes.y, sizes.radius, options),
-    );
+    const { x, y, width, height } = sizes;
+    const body = shallow(Matter.Bodies.rectangle(x, y, width, height, options));
     ref.current = body;
     if (clone) {
-      const ref = createRef<SVGCircleElement>();
+      const ref = createRef<HTMLDivElement>();
       const el = (
-        <g {...cloneProps} ref={ref} key={body.id}>
-          <circle cx={0} cy={0} r={sizes.radius} />
-        </g>
+        <div {...cloneProps} ref={ref} key={body.id}>
+          {children}
+        </div>
       );
       body[cloneKey] = {
-        key: svgKey,
+        key: domKey,
         ref,
         el,
       };
     }
-
     rerender();
   }, [options]);
   useEffect(() => {
@@ -61,13 +60,12 @@ const Circle = ({
   ) : null;
 };
 
-export default valueMemo(Circle);
+export default valueMemo(Html);
 
-type Props = {
-  x: Size;
-  y: Size;
-  radius: Size;
-  clone?: boolean;
-  options?: Matter.IBodyDefinition;
-  cloneProps?: React.SVGProps<SVGGElement>;
-} & Omit<React.ComponentProps<typeof Body>, 'children'>;
+type Props = Omit<
+  React.ComponentProps<typeof Rectangle>,
+  'width' | 'height'
+> & {
+  children: React.ReactElement;
+  cloneProps?: React.HTMLProps<HTMLDivElement>;
+};

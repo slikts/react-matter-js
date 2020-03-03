@@ -20,13 +20,37 @@ const useClones = () => {
         ) {
           return;
         }
-        const { ref } = body[cloneKey]!;
-
+        const clone = body[cloneKey]!;
+        const { ref, key } = clone;
         // TODO: why is this needed?
         if (!ref.current) {
           return;
         }
-        ref.current.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
+        const { style } = ref.current;
+        if (key === svgKey) {
+          style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
+        } else if (clone.key === domKey) {
+          const domEl = clone.ref.current!;
+          const width = domEl.offsetWidth;
+          const height = domEl.offsetHeight;
+          if (!clone.data) {
+            clone.data = {
+              lastWidth: 100,
+              lastHeight: 100,
+            };
+          }
+          const { data } = clone;
+          const { lastWidth, lastHeight } = data;
+          if (width !== lastWidth || height !== lastHeight) {
+            const scaleX = width / lastWidth;
+            const scaleY = height / lastHeight;
+            Matter.Body.scale(body, scaleX, scaleY);
+            data.lastWidth = lastWidth * scaleX;
+            data.lastHeight = lastHeight * scaleY;
+          }
+          style.transform = `translate(${x - width / 2}px, ${y -
+            height / 2}px) rotate(${body.angle}rad)`;
+        }
       });
     };
     Matter.Events.on(engine, 'afterUpdate', afterUpdate);
@@ -52,6 +76,10 @@ type Clone = {
   | {
       key: typeof domKey;
       ref: React.RefObject<HTMLElement>;
+      data?: {
+        lastWidth: number;
+        lastHeight: number;
+      };
     }
   | {
       key: typeof svgKey;
