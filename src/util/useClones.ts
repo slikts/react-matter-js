@@ -12,18 +12,21 @@ const useClones = () => {
   useEffect(() => {
     const afterUpdate = () => {
       bodies.forEach(body => {
-        if (body.isSleeping) {
+        const { x, y } = body.position;
+        if (
+          body.isSleeping &&
+          body.positionPrev.x === x &&
+          body.positionPrev.y === y
+        ) {
           return;
         }
-
-        const { x, y } = body.position!;
         const { ref } = body[cloneKey]!;
 
-        // TODO: ?
+        // TODO: why is this needed?
         if (!ref.current) {
           return;
         }
-        ref.current!.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
+        ref.current.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
       });
     };
     Matter.Events.on(engine, 'afterUpdate', afterUpdate);
@@ -59,5 +62,6 @@ type Clone = {
 declare module 'matter-js' {
   interface Body {
     [cloneKey]?: Clone;
+    positionPrev: Matter.Vector;
   }
 }

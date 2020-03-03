@@ -61,7 +61,9 @@ const Vertices = ({
     rerender();
   }, [options]);
 
-  return ref.current ? <Body {...props} bodyRef={ref} /> : null;
+  return ref.current ? (
+    <Body {...props} bodyRef={ref} key={ref.current.id} />
+  ) : null;
 };
 
 export default valueMemo(Vertices);
