@@ -24,6 +24,7 @@
     "jsx": "react",
     "esModuleInterop": true,
     "downlevelIteration": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noEmit": true
   }
 }

@@ -13,7 +13,8 @@
     "test": "tsdx test --env=jsdom --passWithNoTests",
     "test:prod": "yarn test --coverage",
     "lint": "tsdx lint",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "link": "cd dist && yalc publish"
   },
   "peerDependencies": {
     "react": ">=16"
@@ -45,7 +46,8 @@
     "semantic-release": "^17.0.4",
     "tsdx": "^0.12.3",
     "tslib": "^1.11.0",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.2",
+    "yalc": "^1.0.0-pre.35"
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",
