@@ -54,7 +54,17 @@ const Circle = ({
   useEffect(() => {
     const body = ref.current!;
     Matter.Body.setPosition(body, { x: sizes.x, y: sizes.y });
-  }, [x, y, ref, sizes.x, sizes.y]);
+  }, [ref, sizes.x, sizes.y]);
+  useEffect(() => {
+    const body = ref.current!;
+    const { circleRadius } = body;
+    if (circleRadius === sizes.radius) {
+      return;
+    }
+    const scale = sizes.radius / circleRadius!;
+    Matter.Body.scale(body, scale, scale);
+    body.circleRadius = sizes.radius;
+  }, [ref, sizes.radius]);
 
   return ref.current ? (
     <Body {...props} bodyRef={ref} key={ref.current.id} />

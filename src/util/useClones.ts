@@ -28,6 +28,18 @@ const useClones = () => {
         }
         const { style } = ref.current;
         if (key === svgKey) {
+          // TODO: fix
+          if (!clone.data) {
+            clone.data = {
+              lastRadius: null,
+            };
+          }
+          const { data } = clone;
+          if (data.lastRadius !== body.circleRadius) {
+            // @ts-ignore
+            ref.current.firstChild!.setAttribute('r', body.circleRadius);
+            data.lastRadius = body.circleRadius;
+          }
           style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
         } else if (clone.key === domKey) {
           const domEl = clone.ref.current!;
@@ -84,6 +96,7 @@ type Clone = {
   | {
       key: typeof svgKey;
       ref: React.RefObject<SVGElement>;
+      data?: any;
     }
 );
 
