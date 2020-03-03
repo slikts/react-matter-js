@@ -11,7 +11,7 @@ const Scene = ({
   width = 720,
   height = 540,
   pixelRatio = 'auto',
-  engineOptions = {},
+  engineProps = {},
   rendererProps = {},
   mouse = true,
   gravity,
@@ -47,7 +47,7 @@ const Scene = ({
   ) : null;
 
   return (
-    <Engine options={engineOptions} key={key}>
+    <Engine {...engineProps} key={key}>
       <RenderClones
         {...rendererProps}
         options={rendererOptions}
@@ -71,14 +71,18 @@ type Gravity = {
   y?: number;
   scale?: number;
 };
-type RendererProps = Omit<React.ComponentProps<typeof Render>, 'options'> & {
+type RendererProps = Omit<
+  React.ComponentProps<typeof Render>,
+  'options' | 'children'
+> & {
   options?: Matter.IRendererOptions;
 };
+type EngineProps = Omit<React.ComponentProps<typeof Engine>, 'children'>;
 type Props = {
   width?: number;
   height?: number;
   pixelRatio?: number | 'auto';
-  engineOptions?: Matter.IEngineDefinition;
+  engineProps?: EngineProps;
   rendererProps?: RendererProps;
   mouse?: boolean;
   gravity?: Gravity;

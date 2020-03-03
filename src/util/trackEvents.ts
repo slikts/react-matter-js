@@ -1,11 +1,16 @@
 import Matter from 'matter-js';
-import { CollisionMap } from './HandlerMap';
+import { CollisionMap, SleepMap, MouseMap } from './HandlerMap';
 
 const trackEvents = (engine: Matter.Engine) => {
   const events = {
-    collisionStart: new CollisionMap(engine, 'collisionStart'),
-    collisionActive: new CollisionMap(engine, 'collisionActive'),
-    collisionEnd: new CollisionMap(engine, 'collisionEnd'),
+    collisionStart: new CollisionMap('collisionStart'),
+    collisionActive: new CollisionMap('collisionActive'),
+    collisionEnd: new CollisionMap('collisionEnd'),
+    sleepStart: new SleepMap('sleepStart'),
+    sleepEnd: new SleepMap('sleepEnd'),
+    mouseup: new MouseMap('mouseup'),
+    mousemove: new MouseMap('mousemove'),
+    mousedown: new MouseMap('mousedown'),
   };
   engine[eventsKey] = events;
 

@@ -10,6 +10,7 @@ import {
   useForwardRef,
 } from '../util';
 import { eventsKey } from '../util/trackEvents';
+import { mouseConstraintKey } from '../Render';
 
 const Body = ({
   children: createBody,
@@ -18,6 +19,11 @@ const Body = ({
   onCollisionStart,
   onCollisionActive,
   onCollisionEnd,
+  onSleepStart,
+  onSleepEnd,
+  onMouseDown,
+  onMouseMove,
+  onMouseUp,
 }: Props) => {
   const engine = useEngine();
   const events = engine[eventsKey];
@@ -25,6 +31,7 @@ const Body = ({
 
   useValueEffect(() => {
     const body = shallow(createBody());
+    const mouseConstraint = engine.render[mouseConstraintKey];
 
     ref.current = body;
 
@@ -35,19 +42,31 @@ const Body = ({
       body[catsKey].add(cloneKey);
     }
 
-    if (onCollisionStart) {
-      events.collisionStart.on(body, onCollisionStart);
-    }
-    if (onCollisionActive) {
-      events.collisionActive.on(body, onCollisionActive);
-    }
-    if (onCollisionEnd) {
-      events.collisionEnd.on(body, onCollisionEnd);
+    events.collisionStart.on(body, engine, onCollisionStart);
+    events.collisionActive.on(body, engine, onCollisionActive);
+    events.collisionEnd.on(body, engine, onCollisionEnd);
+    events.sleepStart.on(body, body, onSleepStart);
+    events.sleepEnd.on(body, body, onSleepEnd);
+    if (mouseConstraint) {
+      events.mousedown.on(body, mouseConstraint, onMouseDown);
+      events.mousemove.on(body, mouseConstraint, onMouseMove);
+      events.mouseup.on(body, mouseConstraint, onMouseUp);
     }
 
     Matter.World.add(engine.world, body);
 
     return () => {
+      events.collisionStart.off(body, engine, onCollisionStart);
+      events.collisionActive.off(body, engine, onCollisionActive);
+      events.collisionEnd.off(body, engine, onCollisionEnd);
+      events.sleepStart.off(body, body, onSleepStart);
+      events.sleepEnd.off(body, body, onSleepEnd);
+      if (mouseConstraint) {
+        events.mousedown.off(body, mouseConstraint, onMouseDown);
+        events.mousemove.off(body, mouseConstraint, onMouseMove);
+        events.mouseup.off(body, mouseConstraint, onMouseUp);
+      }
+
       Matter.World.remove(engine.world, body);
 
       ref.current = undefined;
@@ -75,11 +94,20 @@ type Props = {
   onCollisionStart?: CollisionHandler;
   onCollisionActive?: CollisionHandler;
   onCollisionEnd?: CollisionHandler;
+  onSleepStart?: SleepHandler;
+  onSleepEnd?: SleepHandler;
+  onMouseUp?: MouseHandler;
+  onMouseMove?: MouseHandler;
+  onMouseDown?: MouseHandler;
 };
 export type BodyRef = React.MutableRefObject<Matter.Body | undefined>;
-export type CollisionHandler = (
+type CollisionHandler = (
+  source: Matter.Body,
+  target: Matter.Body,
   e: Matter.IEventCollision<Matter.Engine>,
 ) => void;
+type SleepHandler = (e: Matter.IEvent<Matter.Body>) => void;
+type MouseHandler = (e: any) => void;
 
 export const sizesKey = Symbol('sizes');
 

@@ -34,12 +34,14 @@ const Render = ({
 
     if (enableMouse || mouseConstraintOptions) {
       const mouse = shallow(Matter.Mouse.create(render.canvas));
+      render[mouseKey] = mouse;
       const mouseConstraint = shallow(
         Matter.MouseConstraint.create(engine, {
           ...mouseConstraintOptions,
           mouse,
         }),
       );
+      render[mouseConstraintKey] = mouseConstraint;
       Matter.World.add(engine.world, mouseConstraint);
     }
 
@@ -83,6 +85,16 @@ type Props = {
   mouseConstraintOptions?: Matter.IMouseConstraintDefinition;
   children?: React.ReactNode;
 };
+
+export const mouseKey = Symbol('mouse');
+export const mouseConstraintKey = Symbol('mouse constraint');
+
+declare module 'matter-js' {
+  interface Render {
+    [mouseKey]: Matter.Mouse;
+    [mouseConstraintKey]: Matter.MouseConstraint;
+  }
+}
 
 type RenderFn = (engine: Matter.Engine) => React.ReactNode;
 const renderChildren = (

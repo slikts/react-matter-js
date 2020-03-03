@@ -6,7 +6,7 @@ import { valueMemo, EngineContext, useValueEffect } from './util';
 import trackCats from './util/trackCats';
 import trackEvents from './util/trackEvents';
 
-const Engine = ({ options, events = true, children }: Props) => {
+const Engine = ({ options = {}, events = true, children }: Props) => {
   const [engine, setEngine] = useState<Matter.Engine | null>(null);
 
   useValueEffect(() => {
@@ -34,7 +34,7 @@ export default valueMemo(Engine);
 
 type Props = {
   events?: boolean;
-  options: Matter.IEngineDefinition;
+  options?: Matter.IEngineDefinition;
   children: React.ReactNode;
 };
 

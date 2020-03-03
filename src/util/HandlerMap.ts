@@ -1,55 +1,55 @@
 import Matter from 'matter-js';
 import DefaultMap from './DefaultMap';
 
-export type CollisionHandler = (
-  collider: Matter.Body,
-  collidee: Matter.Body,
-  e: Matter.IEventCollision<Matter.Engine>,
-) => void;
-
 // TODO: B type
 class HandlerMap<A, B extends any, C extends string> extends DefaultMap<
   Matter.Body,
   Set<B>
 > {
-  constructor(
-    private engine: Matter.Engine,
-    private eventName: C,
-    private handle: (event: A) => void,
-  ) {
+  constructor(private eventName: C, private handle: (event: A) => void) {
     super(() => new Set());
   }
 
-  on(body: Matter.Body, handler: B) {
+  on(body: Matter.Body, target: Matter.Body | Matter.Engine, handler?: B) {
+    if (!handler) {
+      return;
+    }
     if (!this.size) {
-      Matter.Events.on(this.engine, this.eventName, this.handle);
+      Matter.Events.on(target, this.eventName, this.handle);
     }
     super.get(body).add(handler);
   }
 
-  off(body: Matter.Body, handler: B) {
+  off(body: Matter.Body, target: Matter.Body | Matter.Engine, handler?: B) {
+    if (!handler) {
+      return;
+    }
     const handlers = this.get(body);
     handlers.delete(handler);
     if (!handlers.size) {
       super.delete(body);
     }
     if (!this.size) {
-      Matter.Events.off(this.engine, this.eventName, this.handle);
+      Matter.Events.off(target, this.eventName, this.handle);
     }
   }
 }
 
 export default HandlerMap;
 
-type CollisionEvents = 'collisionStart' | 'collisionActive' | 'collisionEnd';
+export type CollisionHandler = (
+  collider: Matter.Body,
+  collidee: Matter.Body,
+  e: Matter.IEventCollision<Matter.Engine>,
+) => void;
+
 export class CollisionMap extends HandlerMap<
   Matter.IEventCollision<Matter.Engine>,
   any,
   CollisionEvents
 > {
-  constructor(engine: Matter.Engine, eventName: CollisionEvents) {
+  constructor(eventName: CollisionEvents) {
     super(
-      engine,
       eventName,
       event =>
         void event.pairs.forEach(({ bodyA, bodyB }) => {
@@ -67,3 +67,40 @@ export class CollisionMap extends HandlerMap<
     );
   }
 }
+
+type CollisionEvents = 'collisionStart' | 'collisionActive' | 'collisionEnd';
+
+export class SleepMap extends HandlerMap<
+  Matter.IEvent<Matter.Body>,
+  any,
+  'sleepStart' | 'sleepEnd'
+> {
+  constructor(eventName: SleepEvents) {
+    super(
+      eventName,
+      event => void this.get(event.source).forEach(handler => handler(event)),
+    );
+  }
+}
+
+type SleepEvents = 'sleepStart' | 'sleepEnd';
+
+export class MouseMap extends HandlerMap<MouseEvent, any, MouseEvents> {
+  constructor(eventName: MouseEvents) {
+    super(
+      eventName,
+      event =>
+        void this.get(event.source.body).forEach(handler => handler(event)),
+    );
+  }
+}
+type MouseEvent = {
+  mouse: Matter.Mouse;
+  name: MouseEvents;
+  source: Matter.MouseConstraint & {
+    events: any[];
+    element: any | null;
+  };
+};
+
+type MouseEvents = 'mousedown' | 'mousemove' | 'mouseup';
