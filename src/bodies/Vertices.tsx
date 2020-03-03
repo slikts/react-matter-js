@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, useEffect } from 'react';
 import Matter from 'matter-js';
 import { shallow } from 'tuplerone';
 import Body from './Body';
@@ -22,6 +22,7 @@ const Vertices = ({
   const rerender = useRerender();
 
   useValueEffect(() => {
+    // TODO: relativize sizes and position
     const body = shallow(
       Matter.Bodies.fromVertices(x, y, vertexSets, options, flagInternal),
     );
@@ -60,6 +61,10 @@ const Vertices = ({
     }
     rerender();
   }, [options]);
+  useEffect(() => {
+    const body = ref.current!;
+    Matter.Body.setPosition(body, { x, y });
+  }, [x, y, ref]);
 
   return ref.current ? (
     <Body {...props} bodyRef={ref} key={ref.current.id} />

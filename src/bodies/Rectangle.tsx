@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, useEffect } from 'react';
 import Matter from 'matter-js';
 import { shallow } from 'tuplerone';
 import Body from './Body';
@@ -49,6 +49,10 @@ const Rectangle = ({
     }
     rerender();
   }, [options]);
+  useEffect(() => {
+    const body = ref.current!;
+    Matter.Body.setPosition(body, { x: sizes.x, y: sizes.y });
+  }, [x, y, ref, sizes.x, sizes.y]);
 
   return ref.current ? (
     <Body {...props} bodyRef={ref} key={ref.current.id} />
