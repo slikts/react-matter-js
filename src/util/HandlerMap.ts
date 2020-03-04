@@ -85,13 +85,35 @@ export class SleepMap extends HandlerMap<
 
 type SleepEvents = 'sleepStart' | 'sleepEnd';
 
-export class MouseMap extends HandlerMap<MouseEvent, any, MouseEvents> {
+export class MouseMoveMap extends HandlerMap<MouseEvent, any, MouseEvents> {
   constructor(eventName: MouseEvents) {
     super(
       eventName,
       event =>
         void this.get(event.source.body).forEach(handler => handler(event)),
     );
+  }
+}
+export class MouseDownMap extends HandlerMap<MouseEvent, any, MouseEvents> {
+  public lastDown: Matter.Body | null = null;
+
+  constructor(eventName: MouseEvents) {
+    super(eventName, event => {
+      const { body } = event.source;
+      this.lastDown = body;
+      this.get(body).forEach(handler => handler(event));
+    });
+  }
+}
+export class MouseUpMap extends HandlerMap<MouseEvent, any, MouseEvents> {
+  constructor(eventName: MouseEvents, downMap: MouseDownMap) {
+    super(eventName, event => {
+      const body = downMap.lastDown;
+      downMap.lastDown = null;
+      if (body) {
+        this.get(body).forEach(handler => handler(event));
+      }
+    });
   }
 }
 type MouseEvent = {

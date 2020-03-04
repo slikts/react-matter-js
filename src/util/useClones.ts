@@ -2,7 +2,7 @@ import Matter from 'matter-js';
 import React, { useEffect } from 'react';
 import { useEngine } from '../util';
 import { useCat, Cat } from './trackCats';
-import { dataKey } from '../bodies/Body';
+import { dataKey, TrackStates } from '../bodies/Body';
 
 const useClones = () => {
   const engine = useEngine();
@@ -61,12 +61,11 @@ const useClones = () => {
           const width = domEl.offsetWidth;
           const height = domEl.offsetHeight;
           if (!clone.data) {
-            clone.data = {
-              lastWidth: 100,
-              lastHeight: 100,
-            };
+            clone.data = {};
           }
           const { data } = clone;
+          data.lastWidth = data.lastWidth || 100;
+          data.lastHeight = data.lastHeight || 100;
           const { lastWidth, lastHeight } = data;
           if (width !== lastWidth || height !== lastHeight) {
             const scaleX = width / lastWidth;
@@ -97,21 +96,26 @@ export const cloneKey = Symbol('clone');
 export const svgKey = Symbol('SVG clone');
 export const domKey = Symbol('DOM clone');
 
+// TODO: fix types
+type CloneData = {
+  trackStates?: TrackStates;
+  lastRadius?: number | null;
+};
 type Clone = {
   el: React.ReactElement;
 } & (
   | {
       key: typeof domKey;
       ref: React.RefObject<HTMLElement>;
-      data?: {
-        lastWidth: number;
-        lastHeight: number;
+      data?: CloneData & {
+        lastWidth?: number;
+        lastHeight?: number;
       };
     }
   | {
       key: typeof svgKey;
       ref: React.RefObject<SVGElement>;
-      data?: any;
+      data?: CloneData;
     }
 );
 

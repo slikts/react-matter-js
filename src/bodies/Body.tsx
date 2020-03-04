@@ -29,8 +29,9 @@ const Body = ({
     body[dataKey] = { trackStates, sizes };
     body[catsKey] = Array.isArray(cats) ? new Set(cats) : cats;
 
-    if (body[cloneKey]) {
-      body[catsKey].add(body[cloneKey]!.key);
+    const clone = body[cloneKey];
+    if (clone) {
+      body[catsKey].add(clone.key);
       body[catsKey].add(cloneKey);
     }
 
@@ -43,6 +44,19 @@ const Body = ({
       events.mousedown.on(body, mouseConstraint, onMouseDown);
       events.mousemove.on(body, mouseConstraint, onMouseMove);
       events.mouseup.on(body, mouseConstraint, onMouseUp);
+    }
+
+    const { dragging } = trackStates;
+    const trackDragging =
+      clone && mouseConstraint && dragging
+        ? {
+            up: () => void clone.ref.current?.classList.remove(dragging),
+            down: () => void clone.ref.current?.classList.add(dragging!),
+          }
+        : null;
+    if (trackDragging) {
+      events.mouseup.on(body, mouseConstraint, trackDragging.up);
+      events.mousedown.on(body, mouseConstraint, trackDragging.down);
     }
 
     Matter.World.add(engine.world, body);
@@ -58,7 +72,10 @@ const Body = ({
         events.mousemove.off(body, mouseConstraint, onMouseMove);
         events.mouseup.off(body, mouseConstraint, onMouseUp);
       }
-
+      if (trackDragging) {
+        events.mouseup.off(body, mouseConstraint, trackDragging.up);
+        events.mousedown.off(body, mouseConstraint, trackDragging.down);
+      }
       Matter.World.remove(engine.world, body);
 
       bodyRef!.current = undefined;
@@ -92,8 +109,9 @@ type Props = {
   onMouseUp?: MouseHandler;
   onMouseMove?: MouseHandler;
   onMouseDown?: MouseHandler;
-  trackStates?: Partial<Record<State, string>>;
+  trackStates?: TrackStates;
 };
+export type TrackStates = Partial<Record<State, string>>;
 export type State = 'sleeping' | 'colliding' | 'dragging';
 export type BodyRef = React.MutableRefObject<Matter.Body | undefined>;
 type CollisionHandler = (
@@ -108,6 +126,10 @@ export const dataKey = Symbol('body data');
 
 declare module 'matter-js' {
   interface Body {
-    [dataKey]: any;
+    [dataKey]: {
+      trackStates: TrackStates;
+      // TODO: type
+      sizes: any;
+    };
   }
 }
