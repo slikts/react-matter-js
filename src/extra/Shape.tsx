@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import Matter from 'matter-js';
 import 'pathseg';
 import Vertices from '../bodies/Vertices';
@@ -12,15 +12,16 @@ const Shape = ({
   ...props
 }: Props) => {
   const path =
-    sprite.tagName === 'path' ? sprite : sprite.querySelector('path');
+    sprite.tagName === 'path'
+      ? (sprite as SVGPathElement)
+      : (sprite.querySelector('path') as SVGPathElement);
   if (!path) {
     console.warn('invalid sprite', sprite);
   }
-  const vertexSets = useMemo(
-    () => [Matter.Svg.pathToVertices(path as SVGPathElement, sampleLength)],
-    [path, sampleLength],
-  );
-
+  if (!cache.has(path)) {
+    cache.set(path, Matter.Svg.pathToVertices(path, sampleLength));
+  }
+  const vertexSets = cache.get(path);
   const cloneID = useSprite(sprite);
 
   return (
@@ -43,3 +44,5 @@ type Props = {
 
 // @ts-ignore
 window.decomp = require('poly-decomp');
+
+const cache = new WeakMap<SVGElement, Matter.Vector[]>();
