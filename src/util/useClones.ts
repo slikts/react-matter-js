@@ -2,6 +2,7 @@ import Matter from 'matter-js';
 import React, { useEffect } from 'react';
 import { useEngine } from '../util';
 import { useCat, Cat } from './trackCats';
+import { dataKey } from '../bodies/Body';
 
 const useClones = () => {
   const engine = useEngine();
@@ -14,6 +15,8 @@ const useClones = () => {
       bodies.forEach(body => {
         const { x, y } = body.position;
         if (
+          // TODO: optimize circles
+          !body.circleRadius &&
           body.isSleeping &&
           body.positionPrev.x === x &&
           body.positionPrev.y === y
@@ -25,6 +28,18 @@ const useClones = () => {
         // TODO: why is this needed?
         if (!ref.current) {
           return;
+        }
+        const data = body[dataKey];
+        const { trackStates } = data;
+        const { classList } = ref.current;
+        if (trackStates.sleeping) {
+          if (classList.contains(trackStates.sleeping)) {
+            if (!body.isSleeping) {
+              classList.remove(trackStates.sleeping);
+            }
+          } else if (body.isSleeping) {
+            classList.add(trackStates.sleeping);
+          }
         }
         const { style } = ref.current;
         if (key === svgKey) {
