@@ -63,7 +63,6 @@ const Circle = ({
     }
     const scale = sizes.radius / circleRadius!;
     Matter.Body.scale(body, scale, scale);
-    body.circleRadius = sizes.radius;
   }, [ref, sizes.radius]);
 
   return ref.current ? (

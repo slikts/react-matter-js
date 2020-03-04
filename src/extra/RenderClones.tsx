@@ -1,6 +1,6 @@
 import React from 'react';
 import Matter from 'matter-js';
-import { css } from 'emotion';
+import { css, cx } from 'emotion';
 import Render from '../Render';
 import { valueMemo } from '../util';
 import useClones from '../util/useClones';
@@ -18,7 +18,15 @@ const RenderClones = ({
   return (
     <Render {...props} options={options}>
       <div className={cloneContainerStyle}>{dom}</div>
-      <svg viewBox={`0 0 ${width} ${height}`} className={cloneContainerStyle}>
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        className={cx(
+          cloneContainerStyle,
+          css`
+            margin-top: 0;
+          `,
+        )}
+      >
         {svg}
       </svg>
       {children}

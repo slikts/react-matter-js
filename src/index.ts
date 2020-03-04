@@ -13,5 +13,6 @@ export { default as Shape } from './extra/Shape';
 export { default as Walls } from './extra/Walls';
 export { default as Position } from './extra/Position';
 export { default as Html } from './extra/Html';
+export { default as Pool } from './extra/Pool';
 // Utils
 export { relX, relY, useEngine } from './util';
