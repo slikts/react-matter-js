@@ -1,7 +1,7 @@
 import Matter from 'matter-js';
 import { useEffect } from 'react';
 import { useEngine } from './engineContext';
-import { useCat, CatKey, Cat, catsKey } from './trackCats';
+import { CatKey, catsKey } from './trackCats';
 
 export const useCatAttraction = (
   attractorKey: CatKey,
@@ -38,7 +38,7 @@ export const useCatAttraction = (
     Matter.Events.on(engine, 'afterUpdate', afterUpdate);
 
     return () => void Matter.Events.off(engine, 'afterUpdate', afterUpdate);
-  }, []);
+  }, [attractors, engine, gravityConstant, interval, targets]);
   // const sourceCat = useCat(sourceKey);
   // const targetCat = useCat(targetKey);
   console.log(attractors, targets);

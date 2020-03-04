@@ -14,7 +14,7 @@
     "test:prod": "yarn test --coverage",
     "lint": "tsdx lint",
     "tsc": "tsc --noEmit",
-    "link": "cd dist && yalc publish"
+    "link": "yalc publish"
   },
   "peerDependencies": {
     "react": ">=16"
