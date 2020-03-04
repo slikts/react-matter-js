@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 import { cESVG, getRandomId } from './common';
 
-class SpriteMap extends Map<SVGPathElement, string> {
+class SpriteMap extends Map<SpriteKey, string> {
   constructor(
     sprites: Sprites = [],
     private container: any,
@@ -10,7 +10,7 @@ class SpriteMap extends Map<SVGPathElement, string> {
     super(sprites);
   }
 
-  set(shape: SVGPathElement, id: string = getRandomId()) {
+  set(shape: SpriteKey, id: string = getRandomId()) {
     if (this.has(shape)) {
       return this;
     }
@@ -45,7 +45,8 @@ export default SpriteMap;
 export type SpriteOptions = {
   margin?: number;
 };
-export type Sprites = [SVGPathElement, string][];
+export type Sprites = [SpriteKey, string][];
+export type SpriteKey = SVGPathElement | SVGGElement;
 
 const container = cESVG('svg');
 container.style.visibility = 'hidden';
@@ -61,7 +62,7 @@ export const loadSprites = (sprites: Sprites) => {
 export const SpriteContext = createContext<SpriteMap>(spriteMap);
 
 export const useSprites = () => useContext(SpriteContext);
-export const useSprite = (shape: SVGPathElement) =>
+export const useSprite = (shape: SpriteKey) =>
   useSprites()
     .set(shape)
     .get(shape);

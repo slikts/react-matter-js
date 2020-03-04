@@ -2,18 +2,30 @@ import React, { useMemo } from 'react';
 import Matter from 'matter-js';
 import 'pathseg';
 import Vertices from '../bodies/Vertices';
-import { useSprite } from '../util/SpriteMap';
+import { useSprite, SpriteKey } from '../util/SpriteMap';
 
-const Shape = ({ clone = false, path, sampleLength = 30, ...props }: Props) => {
+const Shape = ({
+  clone = false,
+  sprite,
+  sampleLength = 30,
+  children,
+  ...props
+}: Props) => {
+  const path =
+    sprite.tagName === 'path' ? sprite : sprite.querySelector('path');
+  if (!path) {
+    console.warn('invalid sprite', sprite);
+  }
   const vertexSets = useMemo(
-    () => [Matter.Svg.pathToVertices(path, sampleLength)],
+    () => [Matter.Svg.pathToVertices(path as SVGPathElement, sampleLength)],
     [path, sampleLength],
   );
-  const sprite = useSprite(path);
+
+  const cloneID = useSprite(sprite);
 
   return (
     <Vertices
-      cloneID={clone ? sprite : null}
+      cloneID={clone ? cloneID : null}
       vertexSets={vertexSets}
       {...props}
     />
@@ -24,8 +36,9 @@ export default Shape;
 
 type Props = {
   clone?: boolean;
-  path: SVGPathElement;
+  sprite: SpriteKey;
   sampleLength?: number;
+  children?: React.ReactSVGElement;
 } & React.ComponentProps<typeof Vertices>;
 
 // @ts-ignore
