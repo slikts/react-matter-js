@@ -24,7 +24,9 @@
     "jsx": "react",
     "esModuleInterop": true,
     "downlevelIteration": true,
-    "skipLibCheck": true,
-    "noEmit": true
+    "incremental": true,
+    "emitDeclarationOnly": true,
+    "outDir": ".cache/tsbuild",
+    "skipLibCheck": true
   }
 }
