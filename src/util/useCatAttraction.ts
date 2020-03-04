@@ -41,5 +41,4 @@ export const useCatAttraction = (
   }, [attractors, engine, gravityConstant, interval, targets]);
   // const sourceCat = useCat(sourceKey);
   // const targetCat = useCat(targetKey);
-  console.log(attractors, targets);
 };
