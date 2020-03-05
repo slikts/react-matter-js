@@ -2,7 +2,7 @@ import Matter from 'matter-js';
 import React, { useEffect } from 'react';
 import { useEngine } from '../util';
 import { useCat, Cat } from './trackCats';
-import { dataKey, TrackStates } from '../bodies/Body';
+import { dataKey, TrackStates } from '../util/common';
 
 const useClones = () => {
   const engine = useEngine();

@@ -23,3 +23,7 @@ export const useForwardRef = <A>(ref?: MutableRefObject<A>) => {
   const innerRef = useRef<A>();
   return ref ? ref : innerRef;
 };
+
+export type State = 'sleeping' | 'colliding' | 'dragging';
+export type TrackStates = Partial<Record<State, string>>;
+export const dataKey = Symbol('body data');

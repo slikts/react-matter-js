@@ -3,6 +3,7 @@ import { catsKey, CatKey } from '../util/trackCats';
 import { cloneKey } from '../util/useClones';
 import { valueMemo, Sizes, useValueEffect, useEngine } from '../util';
 import { eventsKey } from '../util/trackEvents';
+import { dataKey, TrackStates } from '../util/common';
 import { mouseConstraintKey } from '../Render';
 
 const Body = ({
@@ -111,8 +112,6 @@ type Props = {
   onMouseDown?: MouseHandler;
   trackStates?: TrackStates;
 };
-export type TrackStates = Partial<Record<State, string>>;
-export type State = 'sleeping' | 'colliding' | 'dragging';
 export type BodyRef = React.MutableRefObject<Matter.Body | undefined>;
 type CollisionHandler = (
   source: Matter.Body,
@@ -121,8 +120,6 @@ type CollisionHandler = (
 ) => void;
 type SleepHandler = (e: Matter.IEvent<Matter.Body>) => void;
 type MouseHandler = (e: any) => void;
-
-export const dataKey = Symbol('body data');
 
 declare module 'matter-js' {
   interface Body {
