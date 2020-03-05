@@ -30,18 +30,14 @@ const Vertices = ({
   const sizes = useMapSizes({
     x,
     y,
+    width,
+    height,
   });
 
   useValueEffect(() => {
-    // TODO: relativize sizes and position
+    const { x, y, width, height } = sizes;
     const body = shallow(
-      Matter.Bodies.fromVertices(
-        sizes.x,
-        sizes.y,
-        vertexSets,
-        options,
-        flagInternal,
-      ),
+      Matter.Bodies.fromVertices(x, y, vertexSets, options, flagInternal),
     );
     ref.current = body;
 
@@ -59,14 +55,13 @@ const Vertices = ({
       const scaledHeight = boundHeight * scale * ratio;
 
       const el = (
-        <g ref={ref} key={body.id}>
+        <g ref={ref} key={body.id} {...cloneProps}>
           <use
             xlinkHref={`#${cloneID}`}
             width={px(scaledWidth)}
             height={px(scaledHeight)}
             x={px(-scaledWidth / 2)}
             y={px(-scaledHeight / 2)}
-            {...cloneProps}
           />
         </g>
       );
@@ -95,11 +90,11 @@ type Props = {
   y: Size;
   width: number;
   height: number;
-  vertexSets: any;
-  options: object;
-  flagInternal: boolean;
+  vertexSets?: any;
+  options?: object;
+  flagInternal?: boolean;
   cloneID?: string | null;
-  cloneProps: object;
+  cloneProps?: object;
 } & React.ComponentProps<typeof Body>;
 
 const px = (n: number) => `${n}px`;

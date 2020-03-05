@@ -20,6 +20,7 @@ const Circle = ({
   options,
   cloneProps,
   bodyRef,
+  maxSides,
   ...props
 }: Props) => {
   const sizes = useMapSizes({
@@ -32,7 +33,7 @@ const Circle = ({
 
   useValueEffect(() => {
     const body = shallow(
-      Matter.Bodies.circle(sizes.x, sizes.y, sizes.radius, options),
+      Matter.Bodies.circle(sizes.x, sizes.y, sizes.radius, options, maxSides),
     );
     ref.current = body;
     if (clone) {
@@ -78,5 +79,6 @@ type Props = {
   radius: Size;
   clone?: boolean;
   options?: Matter.IBodyDefinition;
+  maxSides?: number;
   cloneProps?: React.SVGProps<SVGGElement>;
 } & Omit<React.ComponentProps<typeof Body>, 'children'>;

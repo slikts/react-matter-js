@@ -6,29 +6,30 @@ import { useSprite, SpriteKey } from '../util/SpriteMap';
 
 const Shape = ({
   clone = false,
+  hull,
   sprite,
   sampleLength = 30,
   children,
   ...props
 }: Props) => {
   const path =
-    sprite.tagName === 'path'
-      ? (sprite as SVGPathElement)
-      : (sprite.querySelector('path') as SVGPathElement);
+    hull.tagName === 'path'
+      ? (hull as SVGPathElement)
+      : (hull.querySelector('path') as SVGPathElement);
   if (!path) {
-    console.warn('invalid sprite', sprite);
+    console.warn('invalid sprite', hull);
   }
   if (!cache.has(path)) {
     cache.set(path, Matter.Svg.pathToVertices(path, sampleLength));
   }
   const vertexSets = cache.get(path);
-  const cloneID = useSprite(sprite);
+  const cloneID = useSprite(sprite || hull);
 
   return (
     <Vertices
+      {...props}
       cloneID={clone ? cloneID : null}
       vertexSets={vertexSets}
-      {...props}
     />
   );
 };
@@ -37,10 +38,11 @@ export default Shape;
 
 type Props = {
   clone?: boolean;
-  sprite: SpriteKey;
+  hull: SpriteKey;
+  sprite?: SpriteKey;
   sampleLength?: number;
   children?: React.ReactSVGElement;
-} & React.ComponentProps<typeof Vertices>;
+} & Omit<React.ComponentProps<typeof Vertices>, 'vertexSets'>;
 
 // @ts-ignore
 window.decomp = require('poly-decomp');

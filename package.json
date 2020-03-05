@@ -8,8 +8,11 @@
     "dist"
   ],
   "scripts": {
+    "package": "node scripts/copyPackage.js",
+    "prestart": "yarn package",
     "start": "tsdx watch",
-    "build": "tsdx build && node scripts/copyPackage.js",
+    "postbuild": "yarn package",
+    "build": "tsdx build",
     "test": "tsdx test --env=jsdom --passWithNoTests",
     "test:prod": "yarn test --coverage",
     "lint": "tsdx lint",

@@ -8,13 +8,14 @@ const Position = ({
   children,
   bodyRef,
   attrOptions,
+  makeUpdate,
   options,
   ...props
 }: Props) => {
   const attracteeRef = useForwardRef<Body>(children.props.bodyRef);
   const attractorRef = useForwardRef(bodyRef);
 
-  useAttraction(attractorRef, attracteeRef, attrOptions);
+  useAttraction(attractorRef, attracteeRef, attrOptions, makeUpdate);
 
   return (
     <>
@@ -33,6 +34,7 @@ const Position = ({
 type Props = {
   children: React.ReactElement;
   attrOptions: AttrOptions;
+  makeUpdate: (options: AttrOptions) => () => void;
 } & React.ComponentProps<typeof Circle>;
 
 export default valueMemo(Position);

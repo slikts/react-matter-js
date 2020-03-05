@@ -19,6 +19,7 @@ const Body = ({
   onMouseUp,
   trackStates = {},
   sizes,
+  data,
 }: Omit<Props, 'cloneProps'>) => {
   const engine = useEngine();
   const events = engine[eventsKey];
@@ -27,7 +28,7 @@ const Body = ({
   useValueEffect(() => {
     const mouseConstraint = engine.render[mouseConstraintKey];
 
-    body[dataKey] = { trackStates, sizes };
+    body[dataKey] = { trackStates, sizes, data };
     body[catsKey] = Array.isArray(cats) ? new Set(cats) : cats;
 
     const clone = body[cloneKey];
@@ -111,6 +112,7 @@ type Props = {
   onMouseMove?: MouseHandler;
   onMouseDown?: MouseHandler;
   trackStates?: TrackStates;
+  data?: any;
 };
 export type BodyRef = React.MutableRefObject<Matter.Body | undefined>;
 type CollisionHandler = (
@@ -127,6 +129,7 @@ declare module 'matter-js' {
       trackStates: TrackStates;
       // TODO: type
       sizes: any;
+      [key: string]: any;
     };
   }
 }
