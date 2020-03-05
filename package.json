@@ -13,8 +13,9 @@
     "test": "tsdx test --env=jsdom --passWithNoTests",
     "test:prod": "yarn test --coverage",
     "lint": "tsdx lint",
-    "tsc": "tsc --noEmit",
-    "link": "yalc publish"
+    "tsc": "tsc",
+    "preyalc": "yarn build",
+    "yalc": "yalc publish dist"
   },
   "peerDependencies": {
     "react": ">=16"

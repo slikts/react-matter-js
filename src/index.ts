@@ -16,3 +16,7 @@ export { default as Html } from './extra/Html';
 export { default as Pool } from './extra/Pool';
 // Utils
 export { relX, relY, useEngine } from './util';
+export { useCatAttraction } from './util/useCatAttraction';
+export { default as useJitter } from './util/useJitter';
+export { useTrackCatItems } from './util/trackCats';
+export { default as useTiltGravity } from './util/useTiltGravity';
