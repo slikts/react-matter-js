@@ -3,7 +3,14 @@ import Matter from 'matter-js';
 import { shallow } from 'tuplerone';
 import Body from './Body';
 import { cloneKey, svgKey } from '../util/useClones';
-import { valueMemo, useForwardRef, useValueEffect, useRerender } from '../util';
+import {
+  valueMemo,
+  useForwardRef,
+  useValueEffect,
+  useRerender,
+  Size,
+  useMapSizes,
+} from '../util';
 
 const Vertices = ({
   x,
@@ -20,11 +27,21 @@ const Vertices = ({
 }: Props) => {
   const ref = shallow(useForwardRef(bodyRef));
   const rerender = useRerender();
+  const sizes = useMapSizes({
+    x,
+    y,
+  });
 
   useValueEffect(() => {
     // TODO: relativize sizes and position
     const body = shallow(
-      Matter.Bodies.fromVertices(x, y, vertexSets, options, flagInternal),
+      Matter.Bodies.fromVertices(
+        sizes.x,
+        sizes.y,
+        vertexSets,
+        options,
+        flagInternal,
+      ),
     );
     ref.current = body;
 
@@ -63,8 +80,8 @@ const Vertices = ({
   }, [options]);
   useEffect(() => {
     const body = ref.current!;
-    Matter.Body.setPosition(body, { x, y });
-  }, [x, y, ref]);
+    Matter.Body.setPosition(body, { x: sizes.x, y: sizes.y });
+  }, [sizes.x, sizes.y, ref]);
 
   return ref.current ? (
     <Body {...props} bodyRef={ref} key={ref.current.id} />
@@ -74,8 +91,8 @@ const Vertices = ({
 export default valueMemo(Vertices);
 
 type Props = {
-  x: number;
-  y: number;
+  x: Size;
+  y: Size;
   width: number;
   height: number;
   vertexSets: any;
