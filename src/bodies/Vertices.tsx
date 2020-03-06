@@ -36,9 +36,18 @@ const Vertices = ({
 
   useValueEffect(() => {
     const { x, y, width, height } = sizes;
-    const body = shallow(
-      Matter.Bodies.fromVertices(x, y, vertexSets, options, flagInternal),
+    const body = Matter.Bodies.fromVertices(
+      x,
+      y,
+      vertexSets,
+      options,
+      flagInternal,
     );
+    if (!body) {
+      console.warn('invalid vertex sets', vertexSets);
+      return;
+    }
+    shallow(body);
     ref.current = body;
 
     const { min, max } = body.bounds;
@@ -75,10 +84,13 @@ const Vertices = ({
   }, [options]);
   useEffect(() => {
     const body = ref.current!;
+    if (!body) {
+      return;
+    }
     Matter.Body.setPosition(body, { x: sizes.x, y: sizes.y });
   }, [sizes.x, sizes.y, ref]);
 
-  return ref.current ? (
+  return ref.current && ref.current ? (
     <Body {...props} bodyRef={ref} key={ref.current.id} />
   ) : null;
 };

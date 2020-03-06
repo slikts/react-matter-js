@@ -35,19 +35,17 @@ const Html = ({
     const { x, y, width, height } = sizes;
     const body = shallow(Matter.Bodies.rectangle(x, y, width, height, options));
     ref.current = body;
-    if (clone) {
-      const ref = createRef<HTMLDivElement>();
-      const el = (
-        <div {...cloneProps} ref={ref} key={body.id}>
-          {children}
-        </div>
-      );
-      body[cloneKey] = {
-        key: domKey,
-        ref,
-        el,
-      };
-    }
+    const cloneRef = createRef<HTMLDivElement>();
+    const el = (
+      <div {...cloneProps} ref={cloneRef} key={body.id}>
+        {children}
+      </div>
+    );
+    body[cloneKey] = {
+      key: domKey,
+      ref: cloneRef,
+      el,
+    };
     rerender();
   }, [options]);
   useEffect(() => {

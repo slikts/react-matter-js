@@ -6,7 +6,14 @@ import { CatKey, catsKey } from './trackCats';
 export const useCatAttraction = (
   attractorKey: CatKey,
   targetKey: CatKey,
-  { gravityConstant = 1e-3, interval = 3, min = 200, max = 300 } = {},
+  {
+    gravityConstant = 1e-3,
+    interval = 3,
+    min = 200,
+    max = 300,
+    mass = 0,
+    minDist = 0.0001,
+  } = {},
 ) => {
   const engine = useEngine();
   const cats = engine[catsKey];
@@ -29,11 +36,14 @@ export const useCatAttraction = (
           if (distance > max) {
             return;
           }
-
-          const distanceSq = Matter.Vector.magnitudeSquared(bToA) || 0.0001;
+          const distanceSq = Math.max(
+            Matter.Vector.magnitudeSquared(bToA),
+            minDist,
+          );
           const normal = Matter.Vector.normalise(bToA);
           const magnitude =
-            -gravityConstant * ((attractor.mass * target.mass) / distanceSq);
+            -gravityConstant *
+            ((mass || attractor.mass * target.mass) / distanceSq);
           const force = Matter.Vector.mult(normal, magnitude);
 
           Matter.Body.applyForce(target, target.position, force);

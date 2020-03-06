@@ -43,6 +43,7 @@ export const gravity = ({
   boost = 1,
   gravityConstant = 0.001,
   innerFriction = 1,
+  mass,
 }: AttrOptions) => {
   let inside = false;
   const {
@@ -62,11 +63,10 @@ export const gravity = ({
     const normal = Vector.normalise(bToA);
     const magnitude =
       -gravityConstant *
-      (attractee.mass * 1e-4 * distance ** 2) *
+      ((mass || attractee.mass) * 1e-4 * distance ** 2) *
       boost *
       diagonal;
     const force = Vector.mult(normal, magnitude);
-
     Body.applyForce(attractee, attractee.position, Matter.Vector.neg(force));
     // Dampen turn by distance to attractor
     const damp = 1 - Math.min(distance / attractor.circleRadius! / 2, 1);

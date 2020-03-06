@@ -1,5 +1,4 @@
 {
-  "include": ["src"],
   "compilerOptions": {
     "target": "es6",
     "module": "esnext",
@@ -20,11 +19,16 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
-    "baseUrl": "./",
     "jsx": "react",
     "esModuleInterop": true,
     "downlevelIteration": true,
     "noEmit": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": false,
+    "baseUrl": ".",
+    "paths": {
+      "react-matter-js": ["src"]
+    },
+    "pretty": true
+  },
+  "include": ["src", "example", "catsup"]
 }
