@@ -10264,9 +10264,9 @@ tunnel-agent@^0.6.0:
     safe-buffer "^5.0.1"
 
 tuplerone@^3.4.0-beta.6:
-  version "3.4.0-beta.6"
-  resolved "https://registry.yarnpkg.com/tuplerone/-/tuplerone-3.4.0-beta.6.tgz#e089ab6b3037117fc1dd1aaf1e38305742f5f23f"
-  integrity sha512-vkBKtRIsjjN1sCPV4KB3Eun4p7j+KofTVcK/VuCZreVvqWslG7BvlzF7t/r4WXcpnt/vgmHA5dWy6CEW1Qp1Pw==
+  version "3.4.0-beta.7"
+  resolved "https://registry.yarnpkg.com/tuplerone/-/tuplerone-3.4.0-beta.7.tgz#04c3c898258718d2bdfa83681ddbbfb67ae7fc8d"
+  integrity sha512-FO18+NaajX3b5X1YeM/ddY144gL1jKSQ3PNBWxE2YYaqw4g4H9vqNlXgF3KhivpTe+Ktf7J64MRwtOf8hHUhdA==
 
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
