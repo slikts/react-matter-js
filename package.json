@@ -57,7 +57,7 @@
     "@emotion/core": "^10.0.28",
     "@react-hook/window-size": "^1.0.13",
     "@types/gyronorm": "^2.0.0",
-    "@types/matter-js": "^0.10.9",
+    "@types/matter-js": "^0.14.2",
     "emotion": "^10.0.27",
     "gyronorm": "^2.0.6",
     "immer": "^5.3.6",
