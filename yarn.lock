@@ -1408,10 +1408,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.4.tgz#38fd73ddfd9b55abb1e1b2ed578cb55bd7b7d339"
   integrity sha512-8+KAKzEvSUdeo+kmqnKrqgeE+LcA0tjYWFY7RPProVYwnqDjukzO+3b6dLD56rYX5TdWejnEOLJYOIeh4CXKuA==
 
-"@types/matter-js@^0.10.9":
-  version "0.10.9"
-  resolved "https://registry.yarnpkg.com/@types/matter-js/-/matter-js-0.10.9.tgz#e995c8d687e3a8ef858577eacb3e067a8a6e89d9"
-  integrity sha512-/jj78J7/85d74w1zUNfViPuRwT5s4qlJ3Kb76WSiMhP4GgyNvIiVbZq02GxxiH5kEg85OfMTgQ1erHgDGEcUwA==
+"@types/matter-js@^0.14.2":
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/@types/matter-js/-/matter-js-0.14.2.tgz#920be69e4505a8ebb568b93de88a6527b7634400"
+  integrity sha512-yBRBCaigtUtQFSWl1H0UJYgQS7GyC++zgtDy1F9j27KyTU8uaoonbAnszGuIrU3aEpfNXmTGLbTmzlRcKOQPWA==
 
 "@types/minimatch@*":
   version "3.0.3"
