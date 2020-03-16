@@ -35,7 +35,7 @@
     "trailingComma": "all"
   },
   "devDependencies": {
-    "@testing-library/react": "^9.4.1",
+    "@testing-library/react": "^10.0.1",
     "@types/jest": "^25.1.3",
     "@types/node-sass": "^4.11.0",
     "@types/react": "^16.9.22",
