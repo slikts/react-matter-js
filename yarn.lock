@@ -4813,9 +4813,9 @@ ignore@^5.0.4, ignore@^5.1.4:
   integrity sha512-MzbUSahkTW1u7JpKKjY7LCARd1fU5W2rLdxlM4kdkayuCwZImjkpluF9CM1aLewYJguPDqewLam18Y6AU69A8A==
 
 immer@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-6.0.1.tgz#7af35e35753d9da6bc9123f0cc99f7e8f2e10681"
-  integrity sha512-oXwigCKgznQywsXi1VgrqgWbQEU3wievNCVc4Fcwky6mwXU6YHj6JuYp0WEM/B1EphkqsLr0x18lm5OiuemPcA==
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-6.0.2.tgz#5bc08dc4930c756d0749533a2afbd88c8de0cd19"
+  integrity sha512-56CMvUMZl4kkWJFFUe1TjBgGbyb9ibzpLyHD+RSKSVdytuDXgT/HXO1S+GJVywMVl5neGTdAogoR15eRVEd10Q==
 
 import-cwd@^2.0.0, import-cwd@^2.1.0:
   version "2.1.0"
