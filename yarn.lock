@@ -846,14 +846,6 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@essentials/request-timeout@^1.0.1":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@essentials/request-timeout/-/request-timeout-1.0.2.tgz#0fcb7d7ec186fcfc5f32685968407a2d51d6443d"
-  integrity sha512-P4pM8z1J9Ifj9SanjHyIuzV+AF/Ry6Coxm6foyza3aiDsweHME3t5sRrKv0ohpsmQLrmgt8XLlwFLPoAYLpq2Q==
-  dependencies:
-    performance-now "^2.1.0"
-    raf "^3.4.1"
-
 "@iarna/cli@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@iarna/cli/-/cli-1.2.0.tgz#0f7af5e851afe895104583c4ca07377a8094d641"
@@ -1139,27 +1131,23 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@react-hook/debounce@^1.0.6":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@react-hook/debounce/-/debounce-1.0.11.tgz#a8d1deec0d1757768a6ccc702c2edfb92447442f"
-  integrity sha512-FGLzLV2W7qnh2ehSGezao1wkdsMHhN00pYt8IuN/RLFhwd0YDwseEI6pM5ZGjf5lVsALvBaBMKriQ0Wm4UUA5A==
-  dependencies:
-    "@essentials/request-timeout" "^1.0.1"
+"@react-hook/debounce@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@react-hook/debounce/-/debounce-2.0.3.tgz#46b346580a19b41e9f25faad0a4103d7c7e5e1ba"
+  integrity sha512-G1RStTQ5NJvy0N/Wydn+wdahpEJpdKe/KzTVEkGZ7DTKCixjbOD5TtBJfnkajQzfQUrgLely2JE65W58F2hb1A==
 
-"@react-hook/throttle@^1.0.7":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@react-hook/throttle/-/throttle-1.0.12.tgz#4e78cf19de2a733d9a2dfcb342bf99de21fa3d64"
-  integrity sha512-hukkwzt3ok8vhDJGfBIJfQIfI+o2xaMwrZKUUY3yAHTGThJZ8SG5Uga/suuwa9vDNS3+PORPL4ib5cri/QHKnw==
-  dependencies:
-    "@essentials/request-timeout" "^1.0.1"
+"@react-hook/throttle@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@react-hook/throttle/-/throttle-2.1.2.tgz#ff2b342655896dd210246f382e156cdb2ab599cf"
+  integrity sha512-AmZX4wUXHJe/jN33elneFDt5zJN6f4uB9ruTDrBaUcA+Yroh+hjqBlL4/N3IL2sf6oyDRmL2eMQUgJoJN+akIg==
 
-"@react-hook/window-size@^1.0.13":
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/@react-hook/window-size/-/window-size-1.0.13.tgz#c9f1fcbff36a548c44468d2882858e185c48f154"
-  integrity sha512-9HlEV5vNKNnADaThaD0Qt12uNHzI+G5PC8DalxNbQNFbQROcx9kLeaVowx5Wqp3QKQUEEeeKpUgzW5+WgTOEfQ==
+"@react-hook/window-size@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@react-hook/window-size/-/window-size-2.0.4.tgz#e6eb73a7c3b78f9ad79634ce47432905af830855"
+  integrity sha512-7Eo44fLY1ryiL6pOjcCUTxPqsBjVrj0TpJNCGaoqMc88KWYYI6p2micKCVGqIRqTY5HontZFrlkAL3ZoOVic9Q==
   dependencies:
-    "@react-hook/debounce" "^1.0.6"
-    "@react-hook/throttle" "^1.0.7"
+    "@react-hook/debounce" "^2.0.3"
+    "@react-hook/throttle" "^2.1.2"
 
 "@rollup/plugin-commonjs@^11.0.0":
   version "11.0.2"
@@ -8323,13 +8311,6 @@ qw@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/qw/-/qw-1.0.1.tgz#efbfdc740f9ad054304426acb183412cc8b996d4"
   integrity sha1-77/cdA+a0FQwRCassYNBLMi5ltQ=
-
-raf@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
-  integrity sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==
-  dependencies:
-    performance-now "^2.1.0"
 
 rc@^1.0.1, rc@^1.1.6, rc@^1.2.8:
   version "1.2.8"

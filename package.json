@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",
-    "@react-hook/window-size": "^1.0.13",
+    "@react-hook/window-size": "^2.0.4",
     "@types/gyronorm": "^2.0.0",
     "@types/matter-js": "^0.14.2",
     "emotion": "^10.0.27",
