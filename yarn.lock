@@ -8927,9 +8927,9 @@ rollup-plugin-postcss@^3.1.1:
     style-inject "^0.3.0"
 
 rollup-plugin-scss@^2.1.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-scss/-/rollup-plugin-scss-2.4.0.tgz#5206566644dd34e41282b7f8401c9d75cc1207ce"
-  integrity sha512-Op30FQ8NmumMxLT7pOK6WeU86zRbEwUnRhwe0CTDzLdymFcUca7pmuaCe7rfYKB4p0TndlSd86CUMNguxkxOpw==
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-scss/-/rollup-plugin-scss-2.5.0.tgz#ce97d829b27d053007a0e7bd22269eb9af3e7705"
+  integrity sha512-yJauSw1AbyPGohybr44nLTiOH5VejMAK8HgM9bSblcTF/WahC6ekscjzN5yUjzcrEt8SUFfdn/jRH2LRlYhEPQ==
   dependencies:
     node-sass "4"
     rollup-pluginutils "2"
