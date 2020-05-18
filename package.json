@@ -49,7 +49,7 @@
     "rollup-plugin-scss": "^2.1.0",
     "semantic-release": "^17.0.4",
     "tsdx": "^0.13.0",
-    "tslib": "^1.11.0",
+    "tslib": "^2.0.0",
     "typescript": "^3.8.2",
     "yalc": "^1.0.0-pre.35"
   },
