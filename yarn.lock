@@ -1392,9 +1392,9 @@
   integrity sha512-8+KAKzEvSUdeo+kmqnKrqgeE+LcA0tjYWFY7RPProVYwnqDjukzO+3b6dLD56rYX5TdWejnEOLJYOIeh4CXKuA==
 
 "@types/matter-js@^0.14.2":
-  version "0.14.3"
-  resolved "https://registry.yarnpkg.com/@types/matter-js/-/matter-js-0.14.3.tgz#d3be18f503b0d8ef8415be87bd78e3bbd13342a4"
-  integrity sha512-GvAP1OebfDog5IzKte9vP0WLd3hSkKBKqjGvH34xmMNcys5+n1UCjoH8NQ3dRSdUpvSJpgFbCa2QF5wIEFQ2VA==
+  version "0.14.4"
+  resolved "https://registry.yarnpkg.com/@types/matter-js/-/matter-js-0.14.4.tgz#5d481b777677501da53c49a5e2b29fc65aa89f06"
+  integrity sha512-OmRZgx1m2JYp3W8qfN+QwOxEPOJybrM3w+s860a3s7nJnCKoDok3Qa/DUOlURgWr3mHpTGBBmUMMpR+inPZ53A==
 
 "@types/node-sass@^4.11.0":
   version "4.11.1"
