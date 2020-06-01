@@ -1136,17 +1136,30 @@
   resolved "https://registry.yarnpkg.com/@react-hook/debounce/-/debounce-2.0.3.tgz#46b346580a19b41e9f25faad0a4103d7c7e5e1ba"
   integrity sha512-G1RStTQ5NJvy0N/Wydn+wdahpEJpdKe/KzTVEkGZ7DTKCixjbOD5TtBJfnkajQzfQUrgLely2JE65W58F2hb1A==
 
+"@react-hook/event@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@react-hook/event/-/event-1.1.0.tgz#c25034160ded4652d679b3994c96118057dc8d0b"
+  integrity sha512-jaVePoJXqQtQE4umQifLz+Uom4yC5GYTd5K/LrUVRnu0iMXtoIU5qiN4WIVwE6304P9VcBJTcMKtB/5iCC7brg==
+  dependencies:
+    "@react-hook/passive-layout-effect" "^1.0.3"
+
+"@react-hook/passive-layout-effect@^1.0.3":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@react-hook/passive-layout-effect/-/passive-layout-effect-1.1.0.tgz#05e232bf77ffb2efb0a5c3a51826fd4539b343a8"
+  integrity sha512-mdUSD+Quu4vB5bL0dN8CoJvfYdEtUf36ZqvHTt2Otdru6h0QgC7KbrCgOLdZ3tm/7N89ETHC5qJmXWFquXPN5g==
+
 "@react-hook/throttle@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@react-hook/throttle/-/throttle-2.1.2.tgz#ff2b342655896dd210246f382e156cdb2ab599cf"
   integrity sha512-AmZX4wUXHJe/jN33elneFDt5zJN6f4uB9ruTDrBaUcA+Yroh+hjqBlL4/N3IL2sf6oyDRmL2eMQUgJoJN+akIg==
 
 "@react-hook/window-size@^2.0.4":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@react-hook/window-size/-/window-size-2.0.5.tgz#d9a37991589d4ce1276e33867b54bf6e1e6d147f"
-  integrity sha512-IyLAsYm/OpF5Syq5A3fMPVcFDY9ar7QqCUtaTk3h6dI/RqOFjVDShhKxA4Yl71mX9Y6z6Yw4QTPewIBhkGKRfQ==
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@react-hook/window-size/-/window-size-2.1.1.tgz#4254b804facaa002aae9b01bb04eabd931ffd2f4"
+  integrity sha512-W9qr9kUt5pJU82XWUBxcGc2P2kFJPB3xSqmwanFKhiih26y7PmRUa01ZnaARyHZwrmfP/MQGEXBTliCgXc7Gfg==
   dependencies:
     "@react-hook/debounce" "^2.0.3"
+    "@react-hook/event" "^1.1.0"
     "@react-hook/throttle" "^2.1.2"
 
 "@rollup/plugin-commonjs@^11.0.0":
