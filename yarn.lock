@@ -1164,9 +1164,9 @@
     "@react-hook/latest" "^1.0.2"
 
 "@react-hook/window-size@^3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@react-hook/window-size/-/window-size-3.0.6.tgz#1797ea307cb63d94602140c58af75ab51cae4a55"
-  integrity sha512-qlnpZV+IJFLgftCGQOjUf/VfRA/UO6w6/1kO7OBNLNbWXnAEEFvU+F9qPKIApd2oFmLfAOIlK8jm4wsoC+n9Uw==
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@react-hook/window-size/-/window-size-3.0.7.tgz#00d176e7a8eb55814e161eae34aae20afbcbe35d"
+  integrity sha512-bK5ed/jN+cxy0s1jt2CelCnUt7jZRseUvPQ22ZJkUl/QDOsD+7CA/6wcqC3c0QweM/fPBRP6uI56TJ48SnlVww==
   dependencies:
     "@react-hook/debounce" "^3.0.0"
     "@react-hook/event" "^1.2.1"
