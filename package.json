@@ -54,7 +54,7 @@
     "yalc": "^1.0.0-pre.35"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.28",
+    "@emotion/core": "^11.0.0",
     "@react-hook/window-size": "^3.0.6",
     "@types/gyronorm": "^2.0.0",
     "@types/matter-js": "^0.14.2",
