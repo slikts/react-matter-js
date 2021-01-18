@@ -6692,10 +6692,10 @@ marked@^1.0.0:
   resolved "https://registry.yarnpkg.com/marked/-/marked-1.0.0.tgz#d35784245a04871e5988a491e28867362e941693"
   integrity sha512-Wo+L1pWTVibfrSr+TTtMuiMfNzmZWiOPeO7rZsQUY5bgsxpHesBEcIWJloWVTFnrMXnf/TL30eTFSGJddmQAng==
 
-matter-js@^0.14.2:
-  version "0.14.2"
-  resolved "https://registry.yarnpkg.com/matter-js/-/matter-js-0.14.2.tgz#8169af9e06fdc356ba9e72b49624eb329839883b"
-  integrity sha512-3ttVT8cJlQnGRjBa8MyVrGyvGmnmOkZ3YsyemIw+KwEEdVi70mo32FH1Eta2b3GfdDJFbMDRqyMQt4heNKBUEA==
+matter-js@^0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/matter-js/-/matter-js-0.16.0.tgz#f153630303ff026e8789a16c50ad9f29a6c5015b"
+  integrity sha512-otfaJ5d3s3pe96muTfxsFxtuqaX9zywBWCihMaEsWLRsumg2XU+oyK9IMhjKNo39M+Da/rr3RMWiah4dMYzIHw==
 
 mdn-data@2.0.4:
   version "2.0.4"

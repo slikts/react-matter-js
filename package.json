@@ -61,7 +61,7 @@
     "emotion": "^11.0.0",
     "gyronorm": "^2.0.6",
     "immer": "^8.0.0",
-    "matter-js": "^0.14.2",
+    "matter-js": "^0.16.0",
     "pathseg": "^1.2.0",
     "poly-decomp": "^0.3.0",
     "src": "^1.1.2",
