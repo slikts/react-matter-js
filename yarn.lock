@@ -6756,9 +6756,9 @@ marked@^2.0.0:
   integrity sha512-5+/fKgMv2hARmMW7DOpykr2iLhl0NgjyELk5yn92iE7z8Se1IS9n3UsFm86hFXIkvMBmVxki8+ckcpjBeyo/hw==
 
 matter-js@^0.17.0:
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/matter-js/-/matter-js-0.17.0.tgz#f5a7398bdb8773ec3c71e75369d4791b014ff250"
-  integrity sha512-KntcedmJ3KNqQRpDKrtB5218adlARy3YYjbqHDyz2qJ7WGvBzUVWCX8wrkipGWPMVrL99+DSe8bPUsenYBshhA==
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/matter-js/-/matter-js-0.17.1.tgz#b30ac4c708116258fbcaacd2efd8a94e34a91c7f"
+  integrity sha512-pSquoENJgvSAlQGcA0s5UkmEohGXZaUww2g3B6qG87x0iEcVf+aigMXn5UkFPdnh6w3B+C4vXSLaYqhHwKrOLA==
 
 mdn-data@2.0.4:
   version "2.0.4"
